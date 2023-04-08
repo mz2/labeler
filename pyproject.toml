@@ -7,7 +7,21 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+transformers = "^4.27.2"
+torch = "^2.0.0"
+pandas = "^2.0.0"
+scikit-learn = "^1.2.2"
+fastapi = "^0.95.0"
+pydantic = "^1.10.7"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
+asgiref = "^3.6.0"
 
+[tool.pyright]
+include = [
+    "labeler/**/*.py",
+]
+
+typeCheckingMode = "strict"
 
 [build-system]
 requires = ["poetry-core"]

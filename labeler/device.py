@@ -1,9 +1,11 @@
-import torch
+from torch import device
+from torch.cuda import is_available as cuda_is_available
+from torch.backends.mps import is_available as mps_is_available
 
-def get_device():
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-    elif torch.backends.mps.is_available():
-        return torch.device("mps")
+def get_device() -> device:
+    if cuda_is_available():
+        return device("cuda")
+    elif mps_is_available():
+        return device("mps")
     else:
-        return torch.device("cpu")
+        return device("cpu")
