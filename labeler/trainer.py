@@ -32,7 +32,7 @@ class ClassifierTrainer:
         self.val_texts, self.val_labels = self.input_processor.extract_texts_and_labels(val_data)
         self.test_texts, self.test_labels = self.input_processor.extract_texts_and_labels(test_data)
 
-        self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased") # type: ignore
+        self.tokenizer = AutoTokenizer.from_pretrained(training_config.model_type) # type: ignore
         self.num_labels = len(set(self.train_labels))
         self.label_to_index, self.index_to_label = self.__create_label_to_index_map(self.train_labels)
         

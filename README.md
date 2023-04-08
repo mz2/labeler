@@ -1,6 +1,8 @@
-# labeler - ML driven labeler of files
+# labeler - ML driven labeler of files ![Build status](https://github.com/mz2/labeler/actions/workflows/test.yml/badge.svg)
 
-A transformer model based tool for associating textual data with one or more labels (multi-label classifier of text data).
+A transformer model fine-tuning based tool for associating textual data with one or more labels (multi-label classifier of text data).
+
+Tested with [`bert-base-uncased`](https://huggingface.co/bert-base-uncased), but should work beside BERT with a lot of other transformers present in the huggingface [transformers](https://huggingface.co/docs/transformers/index) library (you can switch the model type with the CLI param `--model-type`).
 
 ## Prerequisites
 
