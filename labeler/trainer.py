@@ -12,8 +12,9 @@ from torch.utils.data import DataLoader, TensorDataset
 from pathlib import Path
 
 class TrainingConfig:
-    def __init__(self, labels: Path, batch_size: int = 16, learning_rate: float = 2e-5, num_epochs: int = 10):
+    def __init__(self, labels: Path, model_type: str = "bert-base-uncased", batch_size: int = 16, learning_rate: float = 2e-5, num_epochs: int = 10):
         self.labels = labels
+        self.model_type = model_type
         self.batch_size = batch_size
         self.learning_rate = learning_rate
         self.num_epochs = num_epochs
@@ -51,7 +52,7 @@ class ClassifierTrainer:
                     self.test_texts = self.test_texts[:data_set_size]
                     self.test_labels = self.test_labels[:data_set_size]
 
-        self.model: AutoModelForSequenceClassification = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", problem_type="multi_label_classification", num_labels=self.num_labels, # type: ignore
+        self.model: AutoModelForSequenceClassification = AutoModelForSequenceClassification.from_pretrained(model_type, problem_type="multi_label_classification", num_labels=self.num_labels, # type: ignore
                                                             id2label=self.index_to_label, # type: ignore
                                                             label2id=self.label_to_index) # type: ignore
 

@@ -21,6 +21,8 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Multilabel BERT classifier for log files")
+    parser.add_argument("--model-type", help="Transformer model to use", default="bert-base-uncased")
+
     subparsers = parser.add_subparsers(dest="mode", required=True, help="Mode of operation: train or infer")
 
     train_parser = subparsers.add_parser("train", help="Train the model")
