@@ -17,5 +17,8 @@ A trivial example case problem is provided in the repo under `tests/fixtures/doc
 
 ```bash
 poetry install
-poetry run python labeler/cli/main.py train --labels tests/fixtures/doctype/labels.csv --logs ./tests/fixtures/doctype --save tests/fixtures/doctype.model
+poetry run python labeler/cli/main.py train \
+--labels tests/fixtures/doctype/labels.csv \
+--logs ./tests/fixtures/doctype \
+--save tests/fixtures/doctype.model
 ```

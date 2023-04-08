@@ -52,7 +52,7 @@ class ClassifierTrainer:
                     self.test_texts = self.test_texts[:data_set_size]
                     self.test_labels = self.test_labels[:data_set_size]
 
-        self.model: AutoModelForSequenceClassification = AutoModelForSequenceClassification.from_pretrained(model_type, problem_type="multi_label_classification", num_labels=self.num_labels, # type: ignore
+        self.model: AutoModelForSequenceClassification = AutoModelForSequenceClassification.from_pretrained(self.model_type, problem_type="multi_label_classification", num_labels=self.num_labels, # type: ignore
                                                             id2label=self.index_to_label, # type: ignore
                                                             label2id=self.label_to_index) # type: ignore
 
