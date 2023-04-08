@@ -32,6 +32,12 @@ if __name__ == "__main__":
     infer_parser.add_argument("--load", help="Directory to load the fine-tuned model and tokenizer from", required=True)
     infer_parser.add_argument("--logs", help="Path to a directory with log files for inference", required=True)
 
+    parser.add_argument("-v", "--verbose", help="Increase output verbosity", action="store_true")
+
     args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    
     main(args)
     
