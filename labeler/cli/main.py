@@ -2,8 +2,8 @@ import argparse
 import logging
 from pathlib import Path
 
-from labeler.model_trainer import ClassifierTrainer, TrainingConfig
-from labeler.model_evaluator import ClassifierEvaluator
+from labeler.trainer import ClassifierTrainer, TrainingConfig
+from labeler.evaluator import ClassifierEvaluator
 
 logging.basicConfig(level=logging.INFO)
 

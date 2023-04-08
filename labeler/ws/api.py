@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 from fastapi import FastAPI
 from fastapi.middleware.gzip import GZipMiddleware
-from labeler.model_evaluator import ClassifierEvaluator
+from labeler.evaluator import ClassifierEvaluator
 from pydantic import BaseModel
 
 

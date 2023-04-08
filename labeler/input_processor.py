@@ -4,7 +4,7 @@ from typing import List, Tuple
 import pandas as pd
 from sklearn.model_selection import train_test_split # type: ignore
 
-class LogProcessor:
+class InputProcessor:
     def __init__(self, log_files_dir: Path, labels_file_path: Path, delimiter: str = ";"):
         self.log_files_dir: Path = log_files_dir
         self.labels_file_path: Path = labels_file_path

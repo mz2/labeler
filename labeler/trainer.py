@@ -1,6 +1,6 @@
 import logging
 from typing import Any, Dict, List, Tuple
-from .log_processor import LogProcessor
+from .input_processor import InputProcessor
 from .device import get_device
 
 import torch
@@ -22,14 +22,14 @@ class ClassifierTrainer:
     def __init__(self, log_files_directory: Path, training_config: TrainingConfig):
         self.log_files_directory = log_files_directory
         self.training_config = training_config
-        self.log_processor = LogProcessor(log_files_directory, training_config.labels)
+        self.input_processor = InputProcessor(log_files_directory, training_config.labels)
 
-        self.data = self.log_processor.read_logs()
-        train_data, val_data, test_data = self.log_processor.split_data(self.data)
+        self.data = self.input_processor.read_logs()
+        train_data, val_data, test_data = self.input_processor.split_data(self.data)
 
-        self.train_texts, self.train_labels = self.log_processor.extract_texts_and_labels(train_data)
-        self.val_texts, self.val_labels = self.log_processor.extract_texts_and_labels(val_data)
-        self.test_texts, self.test_labels = self.log_processor.extract_texts_and_labels(test_data)
+        self.train_texts, self.train_labels = self.input_processor.extract_texts_and_labels(train_data)
+        self.val_texts, self.val_labels = self.input_processor.extract_texts_and_labels(val_data)
+        self.test_texts, self.test_labels = self.input_processor.extract_texts_and_labels(test_data)
 
         self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased") # type: ignore
         self.num_labels = len(set(self.train_labels))
