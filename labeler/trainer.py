@@ -56,7 +56,7 @@ class ClassifierTrainer:
                                                             label2id=self.label_to_index) # type: ignore
 
     def __create_label_to_index_map(self, labels_list: List[str]) -> Tuple[Dict[str, int], Dict[int, str]]:
-        unique_labels: set[str] = {label for labels in labels_list for label in labels.split(',')}
+        unique_labels: set[str] = {label for labels in labels_list for label in labels.split(' ')}
         sorted_labels = sorted(unique_labels)
         return ({label: i for i, label in enumerate(sorted_labels)}, {i: label for i, label in enumerate(sorted_labels)})
     
@@ -66,7 +66,7 @@ class ClassifierTrainer:
         binary_labels = np.zeros((len(labels_list), num_labels), dtype=np.float32)
 
         for i, labels in enumerate(labels_list):
-            for label in labels.split(","):
+            for label in labels.split(" "):
                 binary_labels[i, self.label_to_index[label]] = 1.0
 
         return binary_labels
