@@ -1,0 +1,887 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta charset=utf-8>
+<title>
+Basic usage | Documentation | Poetry - Python dependency management and packaging made easy
+</title>
+<meta http-equiv=content-type content="text/html" charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon type=image/png href=/images/favicon-origami-32.png>
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-touch-fullscreen content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="default">
+<meta content="Basic usage For the basic usage introduction we will be installing pendulum, a datetime library. If you have not yet installed Poetry, refer to the Introduction chapter.
+Project setup First, let&rsquo;s create our new project, let&rsquo;s call it poetry-demo:
+poetry new poetry-demo This will create the poetry-demo directory with the following content:
+poetry-demo ├── pyproject.toml ├── README.md ├── poetry_demo │ └── __init__.py └── tests └── __init__.py The pyproject.toml file is what is the most important here." name=description>
+<link rel=canonical href=https://python-poetry.org/docs/basic-usage/>
+<script defer data-domain=python-poetry.org src=https://plausible.io/js/plausible.js></script>
+<link rel=stylesheet href=/assets/app.5efa3b3077daa744f0707a89ba38283a3727545881969bb7eb92c83aeab1814e.css integrity="sha256-Xvo7MHfap0TwcHqJujgoOjcnVFiBlpu365LIOuqxgU4=">
+</head>
+<body><script>function getInitialColorMode(){const a=window.localStorage.getItem("color-mode"),c=typeof a=="string";if(c)return a;const b=window.matchMedia("(prefers-color-scheme: dark)"),d=typeof b.matches=="boolean";return d?b.matches?"dark":"light":"light"}const initialColorMode=getInitialColorMode();document.documentElement.classList.add(initialColorMode),document.documentElement.style.setProperty("color-scheme",initialColorMode)</script>
+<div data-controller=menu data-action="keydown->menu#close">
+<div class="absolute max-w-7xl mx-auto px-4 top-0 left-0 right-0 z-30 sm:px-6 lg:px-8">
+<div class="relative flex justify-end items-center py-6 md:space-x-10">
+<div class="flex flex-grow justify-start lg:w-0 lg:flex-1">
+<a href=/>
+<span class=sr-only>Home</span>
+<img class="h-8 w-auto sm:h-10" src=/images/logo-origami.svg alt="Poetry logo">
+</a>
+</div>
+<div class="search-container hidden w-36 self-end relative lg:flex" data-version=1.4></div>
+<div class="self-end mr-8 w-28 relative md:mr-0" data-controller=select data-action="select:click:outside->select#close">
+<button type=button class=btn aria-haspopup=listbox aria-expanded=true aria-labelledby=listbox-label data-select-target=button data-action="click->select#toggle">
+<span aria-label=Selected class="bg-secondary-400 flex-shrink-0 inline-block h-2 w-2 rounded-full dark:bg-blue-400"></span>
+<span class="flex-grow ml-2 truncate font-medium">
+1.4
+</span>
+<span class="flex-none inset-y-0 text-secondary-800 pointer-events-none dark:text-primary-200"><svg class="h-5 w-5 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentcolor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707A1 1 0 016.293 6.293l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414.0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414.0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+</span>
+</button>
+<ul class="hidden absolute z-10 mt-1 w-full shadow-clean-lg max-h-60 rounded-md py-1 px-1 text-base ring-1 ring-secondary-200 ring-opacity-50 overflow-auto transition transform focus:outline-none sm:text-sm dark:bg-gray-700 dark:shadow-clean-dark-lg dark:ring-0" data-select-target=menu tabindex=-1 role=listbox aria-labelledby=listbox-label data-transition-enter-active data-transition-enter-from data-transition-enter-to data-transition-leave-active="ease-in duration-100" data-transition-leave-from=opacity-100 data-transition-leave-to=opacity-0>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/master/ class="flex justify-end items-center content-center transition py-2 px-1.5 rounded duration-300 hover:bg-light-note-darker dark:hover:bg-dark-note-darker">
+<span class="flex-grow self-center ml-2
+ml-5 font-normal
+inline-block truncate">
+master
+</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/ class="flex justify-end items-center content-center transition py-2 px-1.5 rounded duration-300 hover:bg-light-note-darker dark:hover:bg-dark-note-darker">
+<span aria-label=Selected class="bg-secondary-400 flex-shrink-0 inline-block h-2 w-2 rounded-full dark:bg-blue-400"></span>
+<span class="flex-grow self-center ml-2
+font-medium
+inline-block truncate">
+1.4
+</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/1.3/ class="flex justify-end items-center content-center transition py-2 px-1.5 rounded duration-300 hover:bg-light-note-darker dark:hover:bg-dark-note-darker">
+<span class="flex-grow self-center ml-2
+ml-5 font-normal
+inline-block truncate">
+1.3
+</span>
+</a>
+</li>
+</ul>
+</div><button type=button class="bg-secondary-50 relative inline-flex flex-shrink-0 h-6 w-11 mr-8 border-2 border-transparent rounded-full cursor-pointer transition-all ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-300 dark:focus:ring-blue-200 dark:bg-gray-900 md:mr-0" role=switch aria-checked=false data-controller=mode-switch data-action="click->mode-switch#toggle">
+<span class=sr-only>Use dark mode</span>
+<span class="translate-x-0 pointer-events-none relative inline-block h-5 w-5 rounded-full bg-light-primary shadow-clean transform ring-0 transition ease-in-out duration-200 dark:bg-gray-700 dark:translate-x-5 dark:shadow-clean-dark">
+<span class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity dark:opacity-0" aria-hidden=true><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-3 h-3"><g><path fill="#fcd34d" d="M502.42 240.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.41-94.8a17.31 17.31.0 00-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4a17.31 17.31.0 000 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.41-33.5 47.3 94.7a17.31 17.31.0 0031 0l47.31-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3a17.33 17.33.0 00.2-31.1zm-155.9 106c-49.91 49.9-131.11 49.9-181 0a128.13 128.13.0 010-181c49.9-49.9 131.1-49.9 181 0a128.13 128.13.0 010 181z"/><path fill="#f59e0b" d="M352 256a96 96 0 11-96-96 96.15 96.15.0 0196 96z"/></g></svg>
+</span>
+<span class="opacity-0 ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity dark:opacity-100" aria-hidden=true><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-3 h-3"><g><path fill="#fcd34d" d="M320 32 304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z"/><path fill="#bae6fd" d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18.0 01-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3.0 00-76.1 130.8c0 94 85.4 165.4 178.5 147.7z"/></g></svg>
+</span>
+</span>
+</button>
+<div class="-mr-2 -my-2 md:hidden">
+<button type=button class="btn btn-flat" data-menu-target=button data-action="click->menu#open" aria-expanded=false>
+<span class=sr-only>Open menu</span><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentcolor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+</div>
+<nav class="hidden md:flex">
+<ul class="md:flex md:items-center md:space-x-10">
+<li class="relative flex items-center h-full" data-controller=flyover data-flyover-target=button data-action="mouseenter->flyover#open mouseleave->flyover#close">
+<a href=/docs/ class="self-center text-sm font-medium uppercase transition duration-300 opacity-60 hover:opacity-100">Documentation</a><svg class="ml-2 h-5 w-5 opacity-60 group-hover:opacity-100 transition ease-in-out duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentcolor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414.0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414.0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+<div class="hidden absolute z-10 top-0 left-1/2 transform -translate-x-1/2 mt-8 pt-2 px-2 w-screen max-w-md sm:px-0 lg:max-w-3xl" data-flyover-target=menu data-transition-enter-active="duration-200 ease-out" data-transition-enter-from="opacity-0 scale-95" data-transition-enter-to="opacity-100 scale-100" data-transition-leave-active="duration-100 ease-in" data-transition-leave-from="opacity-100 scale-100" data-transition-leave-to="opacity-0 scale-95">
+<div class="rounded-lg shadow-clean-lg ring-1 ring-secondary-200 ring-opacity-50 overflow-hidden dark:ring-0 dark:shadow-clean-dark-lg">
+<div class="relative grid auto-cols-fr gap-6 bg-light-primary px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-3 dark:bg-gray-700">
+<a href=/docs/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Introduction</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Poetry is a tool for dependency management and packaging in Python.
+</p>
+</div>
+</a>
+<a href=/docs/basic-usage/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Basic usage</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> For the basic usage introduction we will be installing pendulum, a datetime library.
+</p>
+</div>
+</a>
+<a href=/docs/managing-dependencies/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Managing dependencies</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Dependency groups Poetry provides a way to organize your dependencies by groups.
+</p>
+</div>
+</a>
+<a href=/docs/libraries/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Libraries</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> This chapter will tell you how to make your library installable through Poetry.
+Versioning Poetry requires PEP 440-compliant versions for all projects.
+While Poetry does not enforce any release convention, it does encourage the use of semantic versioning within the scope of PEP 440.
+</p>
+</div>
+</a>
+<a href=/docs/cli/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Commands</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> You&rsquo;ve already learned how to use the command-line interface to do some things.
+</p>
+</div>
+</a>
+<a href=/docs/configuration/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Configuration</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Poetry can be configured via the config command (see more about its usage here) or directly in the config.toml file that will be automatically created when you first run that command.
+</p>
+</div>
+</a>
+<a href=/docs/repositories/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Repositories</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Poetry supports the use of PyPI and private repositories for discovery of packages as well as for publishing your projects.
+By default, Poetry is configured to use the PyPI repository, for package installation and publishing.
+So, when you add dependencies to your project, Poetry will assume they are available on PyPI.
+This represents most cases and will likely be enough for most users.
+Private Repository Example Installing from private package sources By default, Poetry discovers and installs packages from PyPI..
+</p>
+</div>
+</a>
+<a href=/docs/managing-environments/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Managing environments</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Poetry makes project environment isolation one of its core features.
+What this means is that it will always work isolated from your global Python installation.
+</p>
+</div>
+</a>
+<a href=/docs/dependency-specification/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Dependency specification</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Dependencies for a project can be specified in various forms, which depend on the type of the dependency and on the optional constraints that might be needed for it to be installed.
+Version constraints Caret requirements Caret requirements allow SemVer compatible updates to a specified version.
+</p>
+</div>
+</a>
+<a href=/docs/plugins/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Plugins</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Poetry supports using and building plugins if you wish to alter or expand Poetry&rsquo;s functionality with your own.
+For example if your environment poses special requirements on the behaviour of Poetry which do not apply to the majority of its users or if you wish to accomplish something with Poetry in a way that is not desired by most users.
+In these cases you could consider creating a plugin to handle your specific logic..
+</p>
+</div>
+</a>
+<a href=/docs/pyproject/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+The pyproject.toml file</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> The tool.poetry section of the pyproject.toml file is composed of multiple sections.
+name The name of the package.
+</p>
+</div>
+</a>
+<a href=/docs/contributing/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+Contributing to Poetry</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> First off, thanks for taking the time to contribute!
+The following is a set of guidelines for contributing to Poetry on GitHub.
+</p>
+</div>
+</a>
+<a href=/docs/faq/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+FAQ</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> Why is the dependency resolution process slow? While the dependency resolver at the heart of Poetry is highly optimized and should be fast enough for most cases, with certain sets of dependencies it can take time to find a valid solution.
+This is due to the fact that not all libraries on PyPI have properly declared their metadata and, as such, they are not available via the PyPI JSON API..
+</p>
+</div>
+</a>
+<a href=/docs/pre-commit-hooks/ class="-m-3 p-3 flex items-start rounded-lg whitespace-nowrap hover:bg-light-note transition ease-in-out duration-150 dark:hover:bg-dark-note-darker">
+<div class=max-w-full>
+<p class="text-base font-medium">
+pre-commit hooks</p>
+<p class="mt-1 text-sm overflow-hidden overflow-ellipsis opacity-60"> pre-commit is a framework for building and running git hooks.
+</p>
+</div>
+</a>
+</div>
+<div class="p-5 bg-light-note sm:p-8 dark:bg-dark-note-darker">
+<div class="relative grid gap-6 sm:gap-8 lg:grid-cols-2">
+<a href=/docs/ class="-m-3 p-3 flow-root rounded-md hover:bg-indigo-50 transition ease-in-out duration-150 dark:hover:bg-gray-800">
+<span class="flex items-center">
+<span class="text-base font-medium">
+1.4
+</span>
+<span class="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-indigo-100 text-indigo-800 dark:text-indigo-300 dark:bg-transparent dark:border dark:border-indigo-300">
+Stable
+</span>
+</span>
+<span class="mt-1 block text-sm opacity-80">
+Documentation for the latest,
+<strong class="font-medium text-indigo-800 dark:font-medium dark:text-indigo-300">stable</strong>, branch.
+</span>
+</a>
+<a href=/docs/master/ class="-m-3 p-3 flow-root rounded-md hover:bg-indigo-50 transition ease-in-out duration-150 dark:hover:bg-gray-800">
+<span class="flex items-center">
+<span class="text-base font-medium">
+master
+</span>
+<span class="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-orange-100 text-orange-700 dark:bg-transparent dark:text-orange-300 dark:border dark:border-orange-300">
+Development
+</span>
+</span>
+<span class="mt-1 block text-sm opacity-80">
+Documentation for the latest,
+<strong class="font-medium text-orange-700 dark:font-medium dark:text-orange-300">in-development</strong>, branch.
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<a href=/blog/ class="self-center text-sm font-medium uppercase transition duration-300 opacity-60 hover:opacity-100">Blog</a>
+</li>
+<li>
+<a href=/history/ class="self-center text-sm font-medium uppercase transition duration-300 opacity-60
+hover:opacity-100">History</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/poetry title="Go to the Github project" class="self-center transition duration-300 opacity-60 hover:opacity-100"><svg class="w-8 h-8" viewBox="0 0 256 250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid"><g><path d="M128.00106.0C57.3172926.0.0 57.3066942.0 128.00106c0 56.554221 36.6761997 104.534482 87.534937 121.459839 6.3970853 1.18487999999999 8.745651-2.776734 8.745651-6.157566C96.280588 240.251045 96.1618878 230.167899 96.106777 219.472176 60.4967585 227.215235 52.9826207 204.369712 52.9826207 204.369712c-5.8226623-14.795114-14.2122127-18.729174-14.2122127-18.729174C27.1568785 177.696113 39.6458206 177.859325 39.6458206 177.859325 52.4993419 178.762293 59.267365 191.04987 59.267365 191.04987c11.4164025 19.568553 29.9442103 13.911223 37.2485035 10.640612C97.6647155 193.417512 100.981959 187.77078 104.642583 184.574357 76.211799 181.33766 46.324819 170.362144 46.324819 121.315702c0-13.974813 5.0002398-25.3933338 13.1884247-34.3573083-1.3290169-3.2239785-5.7103208-16.2428317 1.2399917-33.8740301.0.0 10.7487147-3.4401823 35.2094058 13.1205959 10.2103258-2.8360835 21.1604058-4.2583646 32.0384188-4.3071163C138.879073 61.9465949 149.837632 63.368876 160.067033 66.2049595c24.431017-16.5607782 35.164893-13.1205959 35.164893-13.1205959C202.199197 70.715562 197.815773 83.7344152 196.486756 86.9583937 204.694018 95.9223682 209.660343 107.340889 209.660343 121.315702c0 49.163023-29.94421 59.988045-58.447062 63.156912 4.591149 3.97221400000001 8.682061 11.761904 8.682061 23.703979.0 17.126724-.14837399999999 30.910768-.14837399999999 35.12674C159.746968 246.709601 162.05102 250.70089 168.53925 249.443941 219.370432 232.499507 256 184.536204 256 128.00106 256 57.3066942 198.691187.0 128.00106.0zM47.9405593 182.340212C47.6586465 182.976105 46.6581745 183.166873 45.7467277 182.730227 44.8183235 182.312656 44.2968914 181.445722 44.5978808 180.80771 44.8734344 180.152739 45.876026 179.97045 46.8023103 180.409216 47.7328342 180.826786 48.2627451 181.702199 47.9405593 182.340212zm6.2962299 5.618042C53.6263318 188.524199 52.4329723 188.261363 51.6232682 187.366874 50.7860088 186.474504 50.6291553 185.281144 51.2480912 184.70672 51.8776254 184.140775 53.0349512 184.405731 53.8743302 185.298101 54.7115892 186.201069 54.8748019 187.38595 54.2367892 187.958254zM58.5562413 195.146347C57.7719732 195.691096 56.4895886 195.180261 55.6968417 194.042013 54.9125733 192.903764 54.9125733 191.538713 55.713799 190.991845 56.5086651 190.444977 57.7719732 190.936735 58.5753181 192.066505 59.3574669 193.22383 59.3574669 194.58888 58.5562413 195.146347zM65.8613592 203.471174C65.1597571 204.244846 63.6654083 204.03712 62.5716717 202.981538 61.4524999 201.94927 61.1409122 200.484596 61.8446341 199.710926 62.5547146 198.935137 64.0575422 199.15346 65.1597571 200.200564 66.2704506 201.230712 66.6095936 202.705984 65.8613592 203.471174zM75.3025151 206.281542C74.9930474 207.284134 73.553809 207.739857 72.1039724 207.313809 70.6562556 206.875043 69.7087748 205.700761 70.0012857 204.687571 70.302275 203.678621 71.7478721 203.20382 73.2083069 203.659543 74.6539041 204.09619 75.6035048 205.261994 75.3025151 206.281542zM86.046947 207.473627C86.0829806 208.529209 84.8535871 209.404622 83.3316829 209.4237 81.8013 209.457614 80.563428 208.603398 80.5464708 207.564772c0-1.066181 1.20183800000001-1.93311500000002 2.7322209-1.958551C84.8005962 205.576546 86.046947 206.424403 86.046947 207.473627zM96.6021471 207.069023C96.7844366 208.099171 95.7267341 209.156872 94.215428 209.438785 92.7295577 209.710099 91.3539086 209.074206 91.1652603 208.052538 90.9808515 206.996955 92.0576306 205.939253 93.5413813 205.66582 95.054807 205.402984 96.4092596 206.021919 96.6021471 207.069023z" fill="currentcolor"/></g></svg>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div data-menu-target=menu data-transition-enter-active="duration-150 ease-out" data-transition-enter-from="opacity-0 scale-95" data-transition-enter-to="opacity-100 scale-100" data-transition-leave-active="duration-100 ease-in" data-transition-leave-from="opacity-100 scale-100" data-transition-leave-to="opacity-0 scale-95" class="hidden absolute top-0 inset-x-0 p-2 transition transform origin-top-right z-40 md:hidden" role=menu aria-orientation=vertical>
+<div class="rounded-lg bg-light-primary shadow-clean-md ring-1 ring-secondary-200 ring-opacity-50 overflow-hidden dark:bg-gray-700 dark:ring-0 dark:shadow-clean-dark-lg">
+<div class="px-5 pt-4 flex items-center justify-between">
+<div>
+<img class="h-8 w-auto" src=/images/logo-origami.svg alt=Poetry>
+</div>
+<div class=-mr-2>
+<button type=button class="rounded-md p-2 inline-flex items-center justify-center hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:hover:bg-gray-900 dark:hover:opacity-100 dark:focus:ring-blue-300 dark:focus:border-blue-300" data-action="click->menu#close">
+<span class=sr-only>Close menu</span><svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentcolor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg>
+</button>
+</div>
+</div>
+<div class="px-2 pt-2 pb-3">
+<a href=/docs/ class="block px-3 py-4 rounded-md text-base font-medium uppercase hover:bg-indigo-50 dark:hover:bg-gray-900 dark:hover:opacity-100">Documentation</a>
+<a href=/blog/ class="block px-3 py-4 rounded-md text-base font-medium uppercase hover:bg-indigo-50 dark:hover:bg-gray-900 dark:hover:opacity-100">Blog</a>
+<a href=/history/ class="block px-3 py-4 rounded-md text-base font-medium uppercase hover:bg-indigo-50 dark:hover:bg-gray-900 dark:hover:opacity-100">History</a>
+<a href=https://github.com/python-poetry/poetry title="Go to the Github project" class="block px-3 py-4 rounded-md text-base font-medium uppercase hover:bg-indigo-50 dark:hover:bg-gray-900 dark:hover:opacity-100"><svg viewBox="0 0 256 250" class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><g><path d="M128.00106.0C57.3172926.0.0 57.3066942.0 128.00106c0 56.554221 36.6761997 104.534482 87.534937 121.459839 6.3970853 1.18487999999999 8.745651-2.776734 8.745651-6.157566C96.280588 240.251045 96.1618878 230.167899 96.106777 219.472176 60.4967585 227.215235 52.9826207 204.369712 52.9826207 204.369712c-5.8226623-14.795114-14.2122127-18.729174-14.2122127-18.729174C27.1568785 177.696113 39.6458206 177.859325 39.6458206 177.859325 52.4993419 178.762293 59.267365 191.04987 59.267365 191.04987c11.4164025 19.568553 29.9442103 13.911223 37.2485035 10.640612C97.6647155 193.417512 100.981959 187.77078 104.642583 184.574357 76.211799 181.33766 46.324819 170.362144 46.324819 121.315702c0-13.974813 5.0002398-25.3933338 13.1884247-34.3573083-1.3290169-3.2239785-5.7103208-16.2428317 1.2399917-33.8740301.0.0 10.7487147-3.4401823 35.2094058 13.1205959 10.2103258-2.8360835 21.1604058-4.2583646 32.0384188-4.3071163C138.879073 61.9465949 149.837632 63.368876 160.067033 66.2049595c24.431017-16.5607782 35.164893-13.1205959 35.164893-13.1205959C202.199197 70.715562 197.815773 83.7344152 196.486756 86.9583937 204.694018 95.9223682 209.660343 107.340889 209.660343 121.315702c0 49.163023-29.94421 59.988045-58.447062 63.156912 4.591149 3.97221400000001 8.682061 11.761904 8.682061 23.703979.0 17.126724-.14837399999999 30.910768-.14837399999999 35.12674C159.746968 246.709601 162.05102 250.70089 168.53925 249.443941 219.370432 232.499507 256 184.536204 256 128.00106 256 57.3066942 198.691187.0 128.00106.0zM47.9405593 182.340212C47.6586465 182.976105 46.6581745 183.166873 45.7467277 182.730227 44.8183235 182.312656 44.2968914 181.445722 44.5978808 180.80771 44.8734344 180.152739 45.876026 179.97045 46.8023103 180.409216 47.7328342 180.826786 48.2627451 181.702199 47.9405593 182.340212zm6.2962299 5.618042C53.6263318 188.524199 52.4329723 188.261363 51.6232682 187.366874 50.7860088 186.474504 50.6291553 185.281144 51.2480912 184.70672 51.8776254 184.140775 53.0349512 184.405731 53.8743302 185.298101 54.7115892 186.201069 54.8748019 187.38595 54.2367892 187.958254zM58.5562413 195.146347C57.7719732 195.691096 56.4895886 195.180261 55.6968417 194.042013 54.9125733 192.903764 54.9125733 191.538713 55.713799 190.991845 56.5086651 190.444977 57.7719732 190.936735 58.5753181 192.066505 59.3574669 193.22383 59.3574669 194.58888 58.5562413 195.146347zM65.8613592 203.471174C65.1597571 204.244846 63.6654083 204.03712 62.5716717 202.981538 61.4524999 201.94927 61.1409122 200.484596 61.8446341 199.710926 62.5547146 198.935137 64.0575422 199.15346 65.1597571 200.200564 66.2704506 201.230712 66.6095936 202.705984 65.8613592 203.471174zM75.3025151 206.281542C74.9930474 207.284134 73.553809 207.739857 72.1039724 207.313809 70.6562556 206.875043 69.7087748 205.700761 70.0012857 204.687571 70.302275 203.678621 71.7478721 203.20382 73.2083069 203.659543 74.6539041 204.09619 75.6035048 205.261994 75.3025151 206.281542zM86.046947 207.473627C86.0829806 208.529209 84.8535871 209.404622 83.3316829 209.4237 81.8013 209.457614 80.563428 208.603398 80.5464708 207.564772c0-1.066181 1.20183800000001-1.93311500000002 2.7322209-1.958551C84.8005962 205.576546 86.046947 206.424403 86.046947 207.473627zM96.6021471 207.069023C96.7844366 208.099171 95.7267341 209.156872 94.215428 209.438785 92.7295577 209.710099 91.3539086 209.074206 91.1652603 208.052538 90.9808515 206.996955 92.0576306 205.939253 93.5413813 205.66582 95.054807 205.402984 96.4092596 206.021919 96.6021471 207.069023z" fill="currentcolor"/></g></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div id=content>
+<div class="w-full mt-48 max-w-7xl mx-auto pb-16 px-12 md:mt-64 lg:px-0">
+<div class=lg:flex>
+<div class="hidden z-10 lg:flex-none h-full lg:flex lg:pt-0 lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-80 lg:block">
+<div class="h-[94vh] top-8 overflow-y-auto scrolling-touch lg:h-[94vh] lg:block lg:relative lg:sticky overflow-hidden lg:top-8 mr-24 lg:mr-0">
+<nav id=documentation-menu class="px-1 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm sticky?lg:h-(screen-18)">
+<ul>
+<li class=pb-6>
+<a href=/docs/ class=text-base>Introduction</a>
+</li>
+<li class=pb-6>
+<a href=/docs/basic-usage/ class="text-base
+text-indigo-500 dark:text-blue-300">Basic usage</a>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#project-setup>Project setup</a>
+<ul>
+<li><a href=#initialising-a-pre-existing-project>Initialising a pre-existing project</a></li>
+<li><a href=#specifying-dependencies>Specifying dependencies</a></li>
+</ul>
+</li>
+<li><a href=#using-your-virtual-environment>Using your virtual environment</a>
+<ul>
+<li><a href=#using-poetry-run>Using <code>poetry run</code></a></li>
+<li><a href=#activating-the-virtual-environment>Activating the virtual environment</a></li>
+</ul>
+</li>
+<li><a href=#version-constraints>Version constraints</a></li>
+<li><a href=#installing-dependencies>Installing dependencies</a>
+<ul>
+<li><a href=#installing-without-poetrylock>Installing without <code>poetry.lock</code></a></li>
+<li><a href=#installing-with-poetrylock>Installing with <code>poetry.lock</code></a></li>
+<li><a href=#commit-your-poetrylock-file-to-version-control>Commit your <code>poetry.lock</code> file to version control</a></li>
+<li><a href=#installing-dependencies-only>Installing dependencies only</a></li>
+</ul>
+</li>
+<li><a href=#updating-dependencies-to-their-latest-versions>Updating dependencies to their latest versions</a></li>
+</ul>
+</nav>
+</li>
+<li class=pb-6>
+<a href=/docs/managing-dependencies/ class=text-base>Managing dependencies</a>
+</li>
+<li class=pb-6>
+<a href=/docs/libraries/ class=text-base>Libraries</a>
+</li>
+<li class=pb-6>
+<a href=/docs/cli/ class=text-base>Commands</a>
+</li>
+<li class=pb-6>
+<a href=/docs/configuration/ class=text-base>Configuration</a>
+</li>
+<li class=pb-6>
+<a href=/docs/repositories/ class=text-base>Repositories</a>
+</li>
+<li class=pb-6>
+<a href=/docs/managing-environments/ class=text-base>Managing environments</a>
+</li>
+<li class=pb-6>
+<a href=/docs/dependency-specification/ class=text-base>Dependency specification</a>
+</li>
+<li class=pb-6>
+<a href=/docs/plugins/ class=text-base>Plugins</a>
+</li>
+<li class=pb-6>
+<a href=/docs/pyproject/ class=text-base>The pyproject.toml file</a>
+</li>
+<li class=pb-6>
+<a href=/docs/contributing/ class=text-base>Contributing to Poetry</a>
+</li>
+<li class=pb-6>
+<a href=/docs/faq/ class=text-base>FAQ</a>
+</li>
+<li class=pb-6>
+<a href=/docs/pre-commit-hooks/ class=text-base>pre-commit hooks</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class="relative w-full mb-12 mx-auto md:w-8/12 lg:hidden" data-controller=select data-action="select:click:outside->select#close">
+<div class="search-container w-full relative mb-8 lg:hidden" data-version=1.4></div>
+<button type=button class="btn relative" aria-haspopup=listbox aria-expanded=true aria-labelledby=listbox-label data-select-target=button data-action="click->select#toggle">
+<span aria-label=Selected class="bg-secondary-400 flex-shrink-0 inline-block h-2 w-2 rounded-full dark:bg-indigo-300"></span>
+<span class="ml-2 block truncate font-medium">
+Basic usage</span>
+<span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"><svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentcolor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707A1 1 0 016.293 6.293l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414.0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414.0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+</span>
+</button>
+<ul class="hidden absolute z-10 mt-1 w-full max-w-full bg-white shadow-clean-lg max-h-80 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto transition transform focus:outline-none sm:text-sm dark:bg-gray-700 dark:shadow-clean-dark-lg" data-select-target=menu tabindex=-1 role=listbox aria-labelledby=listbox-label data-transition-enter-active data-transition-enter-from data-transition-enter-to data-transition-leave-active="ease-in duration-100" data-transition-leave-from=opacity-100 data-transition-leave-to=opacity-0>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Introduction</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/basic-usage/ class="relative flex justify-end items-center content-center transition py-4
+pl-3
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span aria-label=Selected class="bg-secondary-400 flex-shrink-0 inline-block h-2 w-2 mr-2 rounded-full dark:bg-indigo-300"></span>
+<span class="flex-grow font-medium inline-block truncate">
+Basic usage</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/managing-dependencies/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Managing dependencies</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/libraries/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Libraries</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/cli/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Commands</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/configuration/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Configuration</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/repositories/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Repositories</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/managing-environments/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Managing environments</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/dependency-specification/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Dependency specification</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/plugins/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Plugins</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/pyproject/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+The pyproject.toml file</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/contributing/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+Contributing to Poetry</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/faq/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+FAQ</span>
+</a>
+</li>
+<li class="cursor-default select-none relative" id=listbox-option-0 role=option>
+<a href=/docs/pre-commit-hooks/ class="relative flex justify-end items-center content-center transition py-4
+pl-7
+pr-7 rounded duration-300 hover:bg-light-note dark:hover:bg-gray-900">
+<span class="flex-grow font-medium inline-block truncate">
+pre-commit hooks</span>
+</a>
+</li>
+</ul>
+</div>
+<main id=docs class="min-w-0 w-full lg:px-12 lg:flex-auto lg:static lg:max-h-full lg:overflow-visible" data-controller=clipboard>
+<h1 class=doc-title>Basic usage</h1>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#project-setup>Project setup</a>
+<ul>
+<li><a href=#initialising-a-pre-existing-project>Initialising a pre-existing project</a></li>
+<li><a href=#specifying-dependencies>Specifying dependencies</a></li>
+</ul>
+</li>
+<li><a href=#using-your-virtual-environment>Using your virtual environment</a>
+<ul>
+<li><a href=#using-poetry-run>Using <code>poetry run</code></a></li>
+<li><a href=#activating-the-virtual-environment>Activating the virtual environment</a></li>
+</ul>
+</li>
+<li><a href=#version-constraints>Version constraints</a></li>
+<li><a href=#installing-dependencies>Installing dependencies</a>
+<ul>
+<li><a href=#installing-without-poetrylock>Installing without <code>poetry.lock</code></a></li>
+<li><a href=#installing-with-poetrylock>Installing with <code>poetry.lock</code></a></li>
+<li><a href=#commit-your-poetrylock-file-to-version-control>Commit your <code>poetry.lock</code> file to version control</a></li>
+<li><a href=#installing-dependencies-only>Installing dependencies only</a></li>
+</ul>
+</li>
+<li><a href=#updating-dependencies-to-their-latest-versions>Updating dependencies to their latest versions</a></li>
+</ul>
+</nav>
+<h1 id=basic-usage>Basic usage <a href=#basic-usage class=header-link aria-label="Permanent link">#</a> </h1>
+<p>For the basic usage introduction we will be installing <code>pendulum</code>, a datetime library.
+If you have not yet installed Poetry, refer to the <a href=/docs/ title=Introduction>Introduction</a> chapter.</p>
+<h2 id=project-setup>Project setup <a href=#project-setup class=header-link aria-label="Permanent link">#</a> </h2>
+<p>First, let&rsquo;s create our new project, let&rsquo;s call it <code>poetry-demo</code>:</p>
+<div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>poetry new poetry-demo
+</code></pre></div><p>This will create the <code>poetry-demo</code> directory with the following content:</p>
+<div class=highlight><pre class=chroma><code class=language-text data-lang=text>poetry-demo
+├── pyproject.toml
+├── README.md
+├── poetry_demo
+│   └── __init__.py
+└── tests
+    └── __init__.py
+</code></pre></div><p>The <code>pyproject.toml</code> file is what is the most important here. This will orchestrate
+your project and its dependencies. For now, it looks like this:</p>
+<div class=highlight><pre class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>tool</span><span class=p>.</span><span class=nx>poetry</span><span class=p>]</span>
+<span class=nx>name</span> <span class=p>=</span> <span class=s2>&#34;poetry-demo&#34;</span>
+<span class=nx>version</span> <span class=p>=</span> <span class=s2>&#34;0.1.0&#34;</span>
+<span class=nx>description</span> <span class=p>=</span> <span class=s2>&#34;&#34;</span>
+<span class=nx>authors</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;Sébastien Eustace &lt;sebastien@eustace.io&gt;&#34;</span><span class=p>]</span>
+<span class=nx>readme</span> <span class=p>=</span> <span class=s2>&#34;README.md&#34;</span>
+<span class=nx>packages</span> <span class=p>=</span> <span class=p>[{</span><span class=nx>include</span> <span class=p>=</span> <span class=s2>&#34;poetry_demo&#34;</span><span class=p>}]</span>
+
+<span class=p>[</span><span class=nx>tool</span><span class=p>.</span><span class=nx>poetry</span><span class=p>.</span><span class=nx>dependencies</span><span class=p>]</span>
+<span class=nx>python</span> <span class=p>=</span> <span class=s2>&#34;^3.7&#34;</span>
+
+
+<span class=p>[</span><span class=nx>build</span><span class=err>-</span><span class=nx>system</span><span class=p>]</span>
+<span class=nx>requires</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;poetry-core&#34;</span><span class=p>]</span>
+<span class=nx>build</span><span class=err>-</span><span class=nx>backend</span> <span class=p>=</span> <span class=s2>&#34;poetry.core.masonry.api&#34;</span>
+</code></pre></div><p>Poetry assumes your package contains a package with the same name as <code>tool.poetry.name</code> located in the root of your
+project. If this is not the case, populate <a href=/docs/pyproject/#packages><code>tool.poetry.packages</code></a> to specify
+your packages and their locations.</p>
+<p>Similarly, the traditional <code>MANIFEST.in</code> file is replaced by the <code>tool.poetry.readme</code>, <code>tool.poetry.include</code>, and
+<code>tool.poetry.exclude</code> sections. <code>tool.poetry.exclude</code> is additionally implicitly populated by your <code>.gitignore</code>. For
+full documentation on the project format, see the <a href=/docs/pyproject/>pyproject section</a> of the documentation.</p>
+<p>Poetry will require you to explicitly specify what versions of Python you intend to support, and its universal locking
+will guarantee that your project is installable (and all dependencies claim support for) all supported Python versions.</p>
+<h3 id=initialising-a-pre-existing-project>Initialising a pre-existing project <a href=#initialising-a-pre-existing-project class=header-link aria-label="Permanent link">#</a> </h3>
+<p>Instead of creating a new project, Poetry can be used to &lsquo;initialise&rsquo; a pre-populated
+directory. To interactively create a <code>pyproject.toml</code> file in directory <code>pre-existing-project</code>:</p>
+<div class=highlight><pre class=chroma><code class=language-bash data-lang=bash><span class=nb>cd</span> pre-existing-project
+poetry init
+</code></pre></div><h3 id=specifying-dependencies>Specifying dependencies <a href=#specifying-dependencies class=header-link aria-label="Permanent link">#</a> </h3>
+<p>If you want to add dependencies to your project, you can specify them in the <code>tool.poetry.dependencies</code> section.</p>
+<div class=highlight><pre class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>tool</span><span class=p>.</span><span class=nx>poetry</span><span class=p>.</span><span class=nx>dependencies</span><span class=p>]</span>
+<span class=nx>pendulum</span> <span class=p>=</span> <span class=s2>&#34;^2.1&#34;</span>
+</code></pre></div><p>As you can see, it takes a mapping of <strong>package names</strong> and <strong>version constraints</strong>.</p>
+<p>Poetry uses this information to search for the right set of files in package &ldquo;repositories&rdquo; that you register
+in the <code>tool.poetry.source</code> section, or on <a href=https://pypi.org>PyPI</a> by default.</p>
+<p>Also, instead of modifying the <code>pyproject.toml</code> file by hand, you can use the <code>add</code> command.</p>
+<div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>$ poetry add pendulum
+</code></pre></div><p>It will automatically find a suitable version constraint <strong>and install</strong> the package and sub-dependencies.</p>
+<p>Poetry supports a rich <a href=/docs/dependency-specification/>dependency specification</a> syntax, including caret,
+tilde, wildcard, inequality and
+<a href=/docs/dependency-specification/#multiple-constraints-dependencies>multiple constraints</a> requirements.</p>
+<h2 id=using-your-virtual-environment>Using your virtual environment <a href=#using-your-virtual-environment class=header-link aria-label="Permanent link">#</a> </h2>
+<p>By default, Poetry creates a virtual environment in <code>{cache-dir}/virtualenvs</code>.
+You can change the <a href=/docs/configuration/#cache-dir title="cache-dir configuration documentation"><code>cache-dir</code></a> value
+by editing the Poetry configuration.
+Additionally, you can use the
+<a href=/docs/configuration/#virtualenvsin-project><code>virtualenvs.in-project</code></a> configuration variable to create
+virtual environments within your project directory.</p>
+<p>There are several ways to run commands within this virtual environment.</p>
+<div class="admonition note">
+<div class=title>Note</div>
+<div class=content><p><strong>External virtual environment management</strong></p>
+<p>Poetry will detect and respect an existing virtual environment that has been externally activated. This is a powerful
+mechanism that is intended to be an alternative to Poetry&rsquo;s built-in, simplified environment management.</p>
+<p>To take advantage of this, simply activate a virtual environment using your preferred method or tooling, before running
+any Poetry commands that expect to manipulate an environment.</p>
+</div>
+</div>
+<h3 id=using-poetry-run>Using <code>poetry run</code> <a href=#using-poetry-run class=header-link aria-label="Permanent link">#</a> </h3>
+<p>To run your script simply use <code>poetry run python your_script.py</code>.
+Likewise if you have command line tools such as <code>pytest</code> or <code>black</code> you can run them using <code>poetry run pytest</code>.</p>
+<h3 id=activating-the-virtual-environment>Activating the virtual environment <a href=#activating-the-virtual-environment class=header-link aria-label="Permanent link">#</a> </h3>
+<p>The easiest way to activate the virtual environment is to create a nested shell with <code>poetry shell</code>.</p>
+<p>To deactivate the virtual environment and exit this new shell type <code>exit</code>.
+To deactivate the virtual environment without leaving the shell use <code>deactivate</code>.</p>
+<div class="admonition note">
+<div class=title>Note</div>
+<div class=content><p><strong>Why a nested shell?</strong></p>
+<p>Child processes inherit their environment from their parents, but do not share
+them. As such, any modifications made by a child process is not persisted after
+the child process exits. A Python application (Poetry), being a child process,
+cannot modify the environment of the shell that it has been called from such
+that an activated virtual environment remains active after the Poetry command
+has completed execution.</p>
+<p>Therefore, Poetry has to create a sub-shell with the virtual environment activated
+in order for the subsequent commands to run from within the virtual environment.</p>
+</div>
+</div>
+<p>Alternatively, to avoid creating a new shell, you can manually activate the
+virtual environment by running <code>source {path_to_venv}/bin/activate</code> (<code>{path_to_venv}\Scripts\activate.ps1</code> in PowerShell).
+To get the path to your virtual environment run <code>poetry env info --path</code>.
+You can also combine these into a one-liner, such as <code>source $(poetry env info --path)/bin/activate</code>
+(<code>& ((poetry env info --path) + "\Scripts\activate.ps1")</code> in Powershell).</p>
+<p>To deactivate this virtual environment simply use <code>deactivate</code>.</p>
+<div class=table-wrapper><table>
+<thead>
+<tr>
+<th></th>
+<th>POSIX Shell</th>
+<th>Windows (PowerShell)</th>
+<th>Exit/Deactivate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-shell</td>
+<td><code>poetry shell</code></td>
+<td><code>poetry shell</code></td>
+<td><code>exit</code></td>
+</tr>
+<tr>
+<td>Manual Activation</td>
+<td><code>source {path_to_venv}/bin/activate</code></td>
+<td><code>{path_to_venv}\Scripts\activate.ps1</code></td>
+<td><code>deactivate</code></td>
+</tr>
+<tr>
+<td>One-liner</td>
+<td><code>source $(poetry env info --path)/bin/activate</code></td>
+<td><code>& ((poetry env info --path) + "\Scripts\activate.ps1")</code></td>
+<td><code>deactivate</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id=version-constraints>Version constraints <a href=#version-constraints class=header-link aria-label="Permanent link">#</a> </h2>
+<p>In our example, we are requesting the <code>pendulum</code> package with the version constraint <code>^2.1</code>.
+This means any version greater or equal to 2.1.0 and less than 3.0.0 (<code>>=2.1.0 &lt;3.0.0</code>).</p>
+<p>Please read <a href=/docs/dependency-specification/ title="Dependency specification documentation">Dependency specification</a>
+for more in-depth information on versions, how versions relate to each other, and on the different ways you can specify
+dependencies.</p>
+<div class="admonition note">
+<div class=title>Note</div>
+<div class=content><p><strong>How does Poetry download the right files?</strong></p>
+<p>When you specify a dependency in <code>pyproject.toml</code>, Poetry first takes the name of the package
+that you have requested and searches for it in any repository you have registered using the <code>repositories</code> key.
+If you have not registered any extra repositories, or it does not find a package with that name in the
+repositories you have specified, it falls back to PyPI.</p>
+<p>When Poetry finds the right package, it then attempts to find the best match for the version constraint you have
+specified.</p>
+</div>
+</div>
+<h2 id=installing-dependencies>Installing dependencies <a href=#installing-dependencies class=header-link aria-label="Permanent link">#</a> </h2>
+<p>To install the defined dependencies for your project, just run the <a href=/docs/cli/#install><code>install</code></a> command.</p>
+<div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>poetry install
+</code></pre></div><p>When you run this command, one of two things may happen:</p>
+<h3 id=installing-without-poetrylock>Installing without <code>poetry.lock</code> <a href=#installing-without-poetrylock class=header-link aria-label="Permanent link">#</a> </h3>
+<p>If you have never run the command before and there is also no <code>poetry.lock</code> file present,
+Poetry simply resolves all dependencies listed in your <code>pyproject.toml</code> file and downloads the latest version of their files.</p>
+<p>When Poetry has finished installing, it writes all the packages and their exact versions that it downloaded to the <code>poetry.lock</code> file,
+locking the project to those specific versions.
+You should commit the <code>poetry.lock</code> file to your project repo so that all people working on the project are locked to the same versions of dependencies (more below).</p>
+<h3 id=installing-with-poetrylock>Installing with <code>poetry.lock</code> <a href=#installing-with-poetrylock class=header-link aria-label="Permanent link">#</a> </h3>
+<p>This brings us to the second scenario. If there is already a <code>poetry.lock</code> file as well as a <code>pyproject.toml</code> file
+when you run <code>poetry install</code>, it means either you ran the <code>install</code> command before,
+or someone else on the project ran the <code>install</code> command and committed the <code>poetry.lock</code> file to the project (which is good).</p>
+<p>Either way, running <code>install</code> when a <code>poetry.lock</code> file is present resolves and installs all dependencies that you listed in <code>pyproject.toml</code>,
+but Poetry uses the exact versions listed in <code>poetry.lock</code> to ensure that the package versions are consistent for everyone working on your project.
+As a result you will have all dependencies requested by your <code>pyproject.toml</code> file,
+but they may not all be at the very latest available versions
+(some dependencies listed in the <code>poetry.lock</code> file may have released newer versions since the file was created).
+This is by design, it ensures that your project does not break because of unexpected changes in dependencies.</p>
+<h3 id=commit-your-poetrylock-file-to-version-control>Commit your <code>poetry.lock</code> file to version control <a href=#commit-your-poetrylock-file-to-version-control class=header-link aria-label="Permanent link">#</a> </h3>
+<p>Committing this file to VC is important because it will cause anyone who sets up the project
+to use the exact same versions of the dependencies that you are using.
+Your CI server, production machines, other developers in your team,
+everything and everyone runs on the same dependencies,
+which mitigates the potential for bugs affecting only some parts of the deployments.
+Even if you develop alone, in six months when reinstalling the project you can feel confident
+the dependencies installed are still working even if your dependencies released many new versions since then.
+(See note below about using the update command.)</p>
+<div class="admonition note">
+<div class=title>Note</div>
+<div class=content>For libraries it is not necessary to commit the lock file.</div>
+</div>
+<h3 id=installing-dependencies-only>Installing dependencies only <a href=#installing-dependencies-only class=header-link aria-label="Permanent link">#</a> </h3>
+<p>The current project is installed in <a href=https://pip.pypa.io/en/stable/topics/local-project-installs/>editable</a> mode by default.</p>
+<p>If you want to install the dependencies only, run the <code>install</code> command with the <code>--no-root</code> flag:</p>
+<div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>poetry install --no-root
+</code></pre></div><h2 id=updating-dependencies-to-their-latest-versions>Updating dependencies to their latest versions <a href=#updating-dependencies-to-their-latest-versions class=header-link aria-label="Permanent link">#</a> </h2>
+<p>As mentioned above, the <code>poetry.lock</code> file prevents you from automatically getting the latest versions
+of your dependencies.
+To update to the latest versions, use the <code>update</code> command.
+This will fetch the latest matching versions (according to your <code>pyproject.toml</code> file)
+and update the lock file with the new versions.
+(This is equivalent to deleting the <code>poetry.lock</code> file and running <code>install</code> again.)</p>
+<div class="admonition note">
+<div class=title>Note</div>
+<div class=content>Poetry will display a <strong>Warning</strong> when executing an install command if <code>poetry.lock</code> and <code>pyproject.toml</code>
+are not synchronized.</div>
+</div>
+</main>
+</div>
+</div>
+</div><footer class="bg-light-note dark:bg-gray-900" aria-labelledby=footerHeading>
+<h2 id=footerHeading class=sr-only>Footer</h2>
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+<div class="xl:grid xl:grid-cols-3 xl:gap-8">
+<div class="space-y-8 xl:col-span-1">
+<img class=h-10 src=/images/logo-origami.svg alt=Poetry>
+<p class="text-base opacity-80">
+Python packaging and dependency management made easy.
+</p>
+<div class="flex space-x-6">
+<a href=https://github.com/python-poetry class="transition opacity-80 hover:opacity-100">
+<span class=sr-only>GitHub</span><svg width="256" height="250" viewBox="0 0 256 250" class="h-7 w-7 text-primary dark:text-dark-primary" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid"><g><path d="M128.00106.0C57.3172926.0.0 57.3066942.0 128.00106c0 56.554221 36.6761997 104.534482 87.534937 121.459839 6.3970853 1.18487999999999 8.745651-2.776734 8.745651-6.157566C96.280588 240.251045 96.1618878 230.167899 96.106777 219.472176 60.4967585 227.215235 52.9826207 204.369712 52.9826207 204.369712c-5.8226623-14.795114-14.2122127-18.729174-14.2122127-18.729174C27.1568785 177.696113 39.6458206 177.859325 39.6458206 177.859325 52.4993419 178.762293 59.267365 191.04987 59.267365 191.04987c11.4164025 19.568553 29.9442103 13.911223 37.2485035 10.640612C97.6647155 193.417512 100.981959 187.77078 104.642583 184.574357 76.211799 181.33766 46.324819 170.362144 46.324819 121.315702c0-13.974813 5.0002398-25.3933338 13.1884247-34.3573083-1.3290169-3.2239785-5.7103208-16.2428317 1.2399917-33.8740301.0.0 10.7487147-3.4401823 35.2094058 13.1205959 10.2103258-2.8360835 21.1604058-4.2583646 32.0384188-4.3071163C138.879073 61.9465949 149.837632 63.368876 160.067033 66.2049595c24.431017-16.5607782 35.164893-13.1205959 35.164893-13.1205959C202.199197 70.715562 197.815773 83.7344152 196.486756 86.9583937 204.694018 95.9223682 209.660343 107.340889 209.660343 121.315702c0 49.163023-29.94421 59.988045-58.447062 63.156912 4.591149 3.97221400000001 8.682061 11.761904 8.682061 23.703979.0 17.126724-.14837399999999 30.910768-.14837399999999 35.12674C159.746968 246.709601 162.05102 250.70089 168.53925 249.443941 219.370432 232.499507 256 184.536204 256 128.00106 256 57.3066942 198.691187.0 128.00106.0zM47.9405593 182.340212C47.6586465 182.976105 46.6581745 183.166873 45.7467277 182.730227 44.8183235 182.312656 44.2968914 181.445722 44.5978808 180.80771 44.8734344 180.152739 45.876026 179.97045 46.8023103 180.409216 47.7328342 180.826786 48.2627451 181.702199 47.9405593 182.340212zm6.2962299 5.618042C53.6263318 188.524199 52.4329723 188.261363 51.6232682 187.366874 50.7860088 186.474504 50.6291553 185.281144 51.2480912 184.70672 51.8776254 184.140775 53.0349512 184.405731 53.8743302 185.298101 54.7115892 186.201069 54.8748019 187.38595 54.2367892 187.958254zM58.5562413 195.146347C57.7719732 195.691096 56.4895886 195.180261 55.6968417 194.042013 54.9125733 192.903764 54.9125733 191.538713 55.713799 190.991845 56.5086651 190.444977 57.7719732 190.936735 58.5753181 192.066505 59.3574669 193.22383 59.3574669 194.58888 58.5562413 195.146347zM65.8613592 203.471174C65.1597571 204.244846 63.6654083 204.03712 62.5716717 202.981538 61.4524999 201.94927 61.1409122 200.484596 61.8446341 199.710926 62.5547146 198.935137 64.0575422 199.15346 65.1597571 200.200564 66.2704506 201.230712 66.6095936 202.705984 65.8613592 203.471174zM75.3025151 206.281542C74.9930474 207.284134 73.553809 207.739857 72.1039724 207.313809 70.6562556 206.875043 69.7087748 205.700761 70.0012857 204.687571 70.302275 203.678621 71.7478721 203.20382 73.2083069 203.659543 74.6539041 204.09619 75.6035048 205.261994 75.3025151 206.281542zM86.046947 207.473627C86.0829806 208.529209 84.8535871 209.404622 83.3316829 209.4237 81.8013 209.457614 80.563428 208.603398 80.5464708 207.564772c0-1.066181 1.20183800000001-1.93311500000002 2.7322209-1.958551C84.8005962 205.576546 86.046947 206.424403 86.046947 207.473627zM96.6021471 207.069023C96.7844366 208.099171 95.7267341 209.156872 94.215428 209.438785 92.7295577 209.710099 91.3539086 209.074206 91.1652603 208.052538 90.9808515 206.996955 92.0576306 205.939253 93.5413813 205.66582 95.054807 205.402984 96.4092596 206.021919 96.6021471 207.069023z" fill="currentcolor"/></g></svg>
+</a>
+<a href=https://discord.com/invite/awxPgve class="transition opacity-80 hover:opacity-100">
+<span class=sr-only>Discord</span><svg viewBox="0 0 71 55" class="h-7 w-7 text-primary dark:text-dark-primary" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip0)"><path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527.41542 45.5603.39851 45.468.440769 45.4204.525289 44.7963 1.6353 44.105 3.0834 43.6209 4.2216c-5.4572-.817-10.8864-.817-16.2317.0C26.905 3.0581 26.1886 1.6353 25.5617.525289 25.5141.443589 25.4218.40133 25.3294.41542c-5.071.87338-9.9237 2.40318-14.4518 4.48238C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795 1.57795 18.7309-.943561 32.1443.293408 45.3914.299005 45.4562.335386 45.5182.385761 45.5576 6.45866 50.0174 12.3413 52.7249 18.1147 54.5195 18.2071 54.5477 18.305 54.5139 18.3638 54.4378 19.7295 52.5728 20.9469 50.6063 21.9907 48.5383 22.0523 48.4172 21.9935 48.2735 21.8676 48.2256 19.9366 47.4931 18.0979 46.6 16.3292 45.5858 16.1893 45.5041 16.1781 45.304 16.3068 45.2082 16.679 44.9293 17.0513 44.6391 17.4067 44.3461 17.471 44.2926 17.5606 44.2813 17.6362 44.3151c11.6196 5.3051 24.1992 5.3051 35.6817.0C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433 53.9057 44.6363 54.2779 44.9293 54.6529 45.2082 54.7816 45.304 54.7732 45.5041 54.6333 45.5858c-1.7687 1.0339-3.6074 1.9073-5.5412 2.637C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383c1.0662 2.0651 2.2836 4.0316 3.6241 5.8967C52.6519 54.5139 52.7526 54.5477 52.845 54.5195c5.8014-1.7946 11.684-4.5021 17.7569-8.9619C70.6551 45.5182 70.6887 45.459 70.6943 45.3942 72.1747 30.0791 68.2147 16.7757 60.1968 4.9823 60.1772 4.9429 60.1437 4.9147 60.1045 4.8978zM23.7259 37.3253c-3.4983.0-6.3808-3.2117-6.3808-7.156s2.8266-7.156 6.3808-7.156c3.5821.0 6.4367 3.2399 6.3807 7.156.0 3.9443-2.8266 7.156-6.3807 7.156zm23.5919.0c-3.4982.0-6.3807-3.2117-6.3807-7.156s2.8265-7.156 6.3807-7.156c3.5822.0 6.4367 3.2399 6.3808 7.156.0 3.9443-2.7986 7.156-6.3808 7.156z" fill="currentcolor"/></g><defs><clipPath id="clip0"><rect width="71" height="55" fill="#fff"/></clipPath></defs></svg>
+</a>
+</div>
+</div>
+<div class="mt-12 grid gap-8 xl:mt-0 xl:col-span-2">
+<div class="md:grid md:grid-cols-3 md:gap-8">
+<div>
+<h3 class="text-sm font-semibold tracking-wider uppercase opacity-60">
+Documentation
+</h3>
+<ul class="mt-4 space-y-4">
+<li>
+<a href=/docs/ class="text-base opacity-80 hover:opacity-100">
+Introduction
+</a>
+</li>
+<li>
+<a href=/docs/basic-usage/ class="text-base opacity-80 hover:opacity-100">
+Basic usage
+</a>
+</li>
+<li>
+<a href=/docs/managing-dependencies/ class="text-base opacity-80 hover:opacity-100">
+Managing dependencies
+</a>
+</li>
+<li>
+<a href=/docs/libraries/ class="text-base opacity-80 hover:opacity-100">
+Libraries
+</a>
+</li>
+<li>
+<a href=/docs/cli/ class="text-base opacity-80 hover:opacity-100">
+Commands
+</a>
+</li>
+<li>
+<a href=/docs/configuration/ class="text-base opacity-80 hover:opacity-100">
+Configuration
+</a>
+</li>
+<li>
+<a href=/docs/repositories/ class="text-base opacity-80 hover:opacity-100">
+Repositories
+</a>
+</li>
+<li>
+<a href=/docs/managing-environments/ class="text-base opacity-80 hover:opacity-100">
+Managing environments
+</a>
+</li>
+<li>
+<a href=/docs/dependency-specification/ class="text-base opacity-80 hover:opacity-100">
+Dependency specification
+</a>
+</li>
+<li>
+<a href=/docs/plugins/ class="text-base opacity-80 hover:opacity-100">
+Plugins
+</a>
+</li>
+<li>
+<a href=/docs/pyproject/ class="text-base opacity-80 hover:opacity-100">
+The pyproject.toml file
+</a>
+</li>
+<li>
+<a href=/docs/contributing/ class="text-base opacity-80 hover:opacity-100">
+Contributing to Poetry
+</a>
+</li>
+<li>
+<a href=/docs/faq/ class="text-base opacity-80 hover:opacity-100">
+FAQ
+</a>
+</li>
+<li>
+<a href=/docs/pre-commit-hooks/ class="text-base opacity-80 hover:opacity-100">
+pre-commit hooks
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-12 md:mt-0">
+<h3 class="text-sm font-semibold tracking-wider uppercase opacity-60"><svg class="w-4 h-4 mr-2 inline align-middle" viewBox="0 0 256 250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid"><g><path d="M128.00106.0C57.3172926.0.0 57.3066942.0 128.00106c0 56.554221 36.6761997 104.534482 87.534937 121.459839 6.3970853 1.18487999999999 8.745651-2.776734 8.745651-6.157566C96.280588 240.251045 96.1618878 230.167899 96.106777 219.472176 60.4967585 227.215235 52.9826207 204.369712 52.9826207 204.369712c-5.8226623-14.795114-14.2122127-18.729174-14.2122127-18.729174C27.1568785 177.696113 39.6458206 177.859325 39.6458206 177.859325 52.4993419 178.762293 59.267365 191.04987 59.267365 191.04987c11.4164025 19.568553 29.9442103 13.911223 37.2485035 10.640612C97.6647155 193.417512 100.981959 187.77078 104.642583 184.574357 76.211799 181.33766 46.324819 170.362144 46.324819 121.315702c0-13.974813 5.0002398-25.3933338 13.1884247-34.3573083-1.3290169-3.2239785-5.7103208-16.2428317 1.2399917-33.8740301.0.0 10.7487147-3.4401823 35.2094058 13.1205959 10.2103258-2.8360835 21.1604058-4.2583646 32.0384188-4.3071163C138.879073 61.9465949 149.837632 63.368876 160.067033 66.2049595c24.431017-16.5607782 35.164893-13.1205959 35.164893-13.1205959C202.199197 70.715562 197.815773 83.7344152 196.486756 86.9583937 204.694018 95.9223682 209.660343 107.340889 209.660343 121.315702c0 49.163023-29.94421 59.988045-58.447062 63.156912 4.591149 3.97221400000001 8.682061 11.761904 8.682061 23.703979.0 17.126724-.14837399999999 30.910768-.14837399999999 35.12674C159.746968 246.709601 162.05102 250.70089 168.53925 249.443941 219.370432 232.499507 256 184.536204 256 128.00106 256 57.3066942 198.691187.0 128.00106.0zM47.9405593 182.340212C47.6586465 182.976105 46.6581745 183.166873 45.7467277 182.730227 44.8183235 182.312656 44.2968914 181.445722 44.5978808 180.80771 44.8734344 180.152739 45.876026 179.97045 46.8023103 180.409216 47.7328342 180.826786 48.2627451 181.702199 47.9405593 182.340212zm6.2962299 5.618042C53.6263318 188.524199 52.4329723 188.261363 51.6232682 187.366874 50.7860088 186.474504 50.6291553 185.281144 51.2480912 184.70672 51.8776254 184.140775 53.0349512 184.405731 53.8743302 185.298101 54.7115892 186.201069 54.8748019 187.38595 54.2367892 187.958254zM58.5562413 195.146347C57.7719732 195.691096 56.4895886 195.180261 55.6968417 194.042013 54.9125733 192.903764 54.9125733 191.538713 55.713799 190.991845 56.5086651 190.444977 57.7719732 190.936735 58.5753181 192.066505 59.3574669 193.22383 59.3574669 194.58888 58.5562413 195.146347zM65.8613592 203.471174C65.1597571 204.244846 63.6654083 204.03712 62.5716717 202.981538 61.4524999 201.94927 61.1409122 200.484596 61.8446341 199.710926 62.5547146 198.935137 64.0575422 199.15346 65.1597571 200.200564 66.2704506 201.230712 66.6095936 202.705984 65.8613592 203.471174zM75.3025151 206.281542C74.9930474 207.284134 73.553809 207.739857 72.1039724 207.313809 70.6562556 206.875043 69.7087748 205.700761 70.0012857 204.687571 70.302275 203.678621 71.7478721 203.20382 73.2083069 203.659543 74.6539041 204.09619 75.6035048 205.261994 75.3025151 206.281542zM86.046947 207.473627C86.0829806 208.529209 84.8535871 209.404622 83.3316829 209.4237 81.8013 209.457614 80.563428 208.603398 80.5464708 207.564772c0-1.066181 1.20183800000001-1.93311500000002 2.7322209-1.958551C84.8005962 205.576546 86.046947 206.424403 86.046947 207.473627zM96.6021471 207.069023C96.7844366 208.099171 95.7267341 209.156872 94.215428 209.438785 92.7295577 209.710099 91.3539086 209.074206 91.1652603 208.052538 90.9808515 206.996955 92.0576306 205.939253 93.5413813 205.66582 95.054807 205.402984 96.4092596 206.021919 96.6021471 207.069023z" fill="currentcolor"/></g></svg>
+<span class="inline align-middle">Github</span>
+</h3>
+<ul class="mt-4 space-y-4">
+<li>
+<a href=https://github.com/python-poetry/poetry class="text-base opacity-80 hover:opacity-100">
+Project
+</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/poetry/issues class="text-base opacity-80 hover:opacity-100">
+Issues
+</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/poetry/discussions class="text-base opacity-80 hover:opacity-100">
+Discussions
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-12 md:mt-0">
+<h3 class="text-sm font-semibold tracking-wider uppercase opacity-60">
+Other Projects
+</h3>
+<ul class="mt-4 space-y-4">
+<li>
+<a href=https://github.com/python-poetry/poetry-core class="text-base opacity-80 hover:opacity-100">
+poetry-core
+</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/install.python-poetry.org class="text-base opacity-80 hover:opacity-100">
+install.python-poetry.org
+</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/poetry-plugin-bundle class="text-base opacity-80 hover:opacity-100">
+Bundle plugin
+</a>
+</li>
+<li>
+<a href=https://github.com/python-poetry/poetry-plugin-export class="text-base opacity-80 hover:opacity-100">
+Export plugin
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 border-t border-gray-200 pt-8 dark:border-gray-600">
+<p class="flex flex-col text-base opacity-60 md:items-center md:justify-center xl:text-center">
+<span>Copyright &copy; 2018-2023. All Rights
+Reserved.</span>
+<span class="flex items-center justify-start md:justify-center">
+Powered by
+<a href="https://vercel.com?utm_source=python-poetry&utm_campaign=oss" title="Go to the Vercel website" class=vercel-footer-link><svg viewBox="0 0 4438 1e3" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2223.75 250c-172.5.0-296.88 112.5-296.88 281.25S2066.72 812.5 2239.38 812.5c104.21.0 196.09-41.25 252.96-110.781L2372.81 632.656C2341.25 667.188 2293.28 687.344 2239.38 687.344 2164.53 687.344 2100.94 648.281 2077.34 585.781h437.82C2518.59 568.281 2520.63 550.156 2520.63 531.094 2520.63 362.5 2396.41 250 2223.75 250zM2076.09 476.562C2095.62 414.219 2149.06 375 2223.75 375 2298.59 375 2352.03 414.219 2371.41 476.562H2076.09zM2040.78 78.125l-432.97 750-433.12-750h162.34l270.63 468.75 270.62-468.75h162.5zM577.344.0 1154.69 1e3H0L577.344.0zM3148.75 531.25C3148.75 625 3210 687.5 3305 687.5 3369.38 687.5 3417.66 658.281 3442.5 610.625L3562.5 679.844C3512.81 762.656 3419.69 812.5 3305 812.5c-172.66.0-296.87-112.5-296.87-281.25S3132.5 250 3305 250c114.69.0 207.66 49.844 257.5 132.656l-120 69.219C3417.66 404.219 3369.38 375 3305 375 3210.16 375 3148.75 437.5 3148.75 531.25zM4437.5 78.125v718.75H4296.88V78.125H4437.5zM3906.25 250c-172.5.0-296.87 112.5-296.87 281.25s140 281.25 312.5 281.25c104.21.0 196.09-41.25 252.96-110.781L4055.31 632.656C4023.75 667.188 3975.78 687.344 3921.88 687.344 3847.03 687.344 3783.44 648.281 3759.84 585.781h437.82C4201.09 568.281 4203.12 550.156 4203.12 531.094 4203.12 362.5 4078.91 250 3906.25 250zM3758.59 476.562C3778.13 414.219 3831.41 375 3906.25 375s128.28 39.219 147.66 101.562H3758.59zM2961.25 265.625V417.031C2945.63 412.5 2929.06 409.375 2911.25 409.375 2820.47 409.375 2755 471.875 2755 565.625v231.25H2614.38V265.625H2755v143.75C2755 330 2847.34 265.625 2961.25 265.625z" fill="currentcolor"/></svg>
+</a>
+</span>
+</p>
+</div>
+</div>
+</footer>
+<script type=module src=/assets/app.06b6b39fd3fd639dfe938c68b738883430184da40d25326400167de871d8d6e9.js integrity="sha256-Brazn9P9Y53+k4xotziINDAYTaQNJTJkABZ96HHY1uk="></script>
+</body>
+</html>

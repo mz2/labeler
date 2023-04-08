@@ -2,7 +2,6 @@ from typing import List
 from .device import get_device
 
 import torch
-import numpy as np
 
 from transformers import BertForSequenceClassification, BertTokenizer # type: ignore
 from transformers import BertTokenizer, BertForSequenceClassification # type: ignore
