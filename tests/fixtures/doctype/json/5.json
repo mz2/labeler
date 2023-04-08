@@ -1,0 +1,11 @@
+{
+    "data": [
+        "apple",
+        3,
+        true,
+        {
+            "name": "Jane Doe",
+            "age": 25
+        }
+    ]
+}

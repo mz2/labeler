@@ -71,11 +71,15 @@ class ClassifierTrainer:
 
         return binary_labels
 
-    def evaluate(self, dataloader: DataLoader[Any]) -> float:
+    def evaluate(self, dataloader: DataLoader[Any]) -> Dict[str, float]:
         device = get_device()
         self.model.eval() # type: ignore
         total_loss = 0
         total_steps = 0
+        total_tp = 0
+        total_fp = 0
+        total_tn = 0
+        total_fn = 0
 
         with torch.no_grad():
             for batch in dataloader:
@@ -85,8 +89,26 @@ class ClassifierTrainer:
                 loss = outputs.loss # type: ignore
                 total_loss += loss.item() # type: ignore
                 total_steps += 1
-
-        return total_loss / total_steps # type: ignore
+                
+                logits = outputs.logits # type: ignore
+                preds = torch.sigmoid(logits) > 0.5 # type: ignore
+                preds = preds.cpu().numpy()
+                labels = labels.cpu().numpy()
+                
+                tp = np.sum((labels == 1) & (preds == 1)) # type: ignore
+                fp = np.sum((labels == 0) & (preds == 1)) # type: ignore
+                tn = np.sum((labels == 0) & (preds == 0)) # type: ignore
+                fn = np.sum((labels == 1) & (preds == 0)) # type: ignore
+                total_tp += tp
+                total_fp += fp
+                total_tn += tn
+                total_fn += fn
+        
+        accuracy = (total_tp + total_tn) / (total_tp + total_fp + total_tn + total_fn)
+        precision = total_tp / (total_tp + total_fp)
+        recall = total_tp / (total_tp + total_fn)
+        
+        return { "average_loss": total_loss / total_steps, "fpr": 1 - precision, "fnr": 1 - recall, "accuracy": accuracy } # type: ignore
 
     def train(self) -> None:
         train_encodings = self.tokenizer(self.train_texts, truncation=True, padding=True)
@@ -122,15 +144,16 @@ class ClassifierTrainer:
                 optimizer.zero_grad()
 
                 outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels) # type: ignore
+                logging.debug(outputs) # type: ignore
                 loss = outputs.loss # type: ignore
                 loss.backward() # type: ignore
                 optimizer.step()
 
-            val_loss = self.evaluate(val_loader)
-            logging.info(f"Validation loss after epoch {epoch + 1}: {val_loss:.4f}")
+            val_output = self.evaluate(val_loader)
+            logging.info(f"Validation loss after epoch {epoch + 1}: {val_output}")
 
-        test_loss = self.evaluate(test_loader)
-        logging.info(f"Test loss after training: {test_loss:.4f}")
+        test_output = self.evaluate(test_loader)
+        logging.info(f"Test loss after training: {test_output}")
 
     def save_pretrained(self, save_directory: Path):
         self.model.save_pretrained(save_directory) # type: ignore

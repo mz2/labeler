@@ -1,0 +1,15 @@
+# Define an anchor for a common configuration
+defaults: &defaults
+  timeout: 30
+  retries: 3
+
+# Use the anchor for specific configurations
+api:
+  <<: *defaults
+  endpoint: https://api.example.com
+  version: 1.0
+
+database:
+  <<: *defaults
+  host: db.example.com
+  port: 5432
