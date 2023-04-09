@@ -1,9 +1,10 @@
 from pathlib import Path
-from pytest import approx # type: ignore
+from pytest import approx  # type: ignore
 
 import pandas as pd
 
 from labeler.input_processor import InputProcessor
+
 
 def setup_module():
     global processor, log_files_dir, labels_file_path, delimiter
@@ -12,19 +13,23 @@ def setup_module():
     delimiter = ";"
     processor = InputProcessor(log_files_dir, labels_file_path, delimiter)
 
+
 def test_init():
     assert processor.log_files_dir == log_files_dir
     assert processor.labels_file_path == labels_file_path
     assert processor.delimiter == delimiter
 
+
 def test_preprocess_log():
     log = "Sample log content"
-    assert processor._preprocess_log(log) == log # type: ignore
+    assert processor._preprocess_log(log) == log  # type: ignore
+
 
 def test_read_logs():
     data = processor.read_logs()
     assert isinstance(data, pd.DataFrame)
-    assert len(data) == len(pd.read_csv(labels_file_path, delimiter=delimiter)) # type: ignore
+    assert len(data) == len(pd.read_csv(labels_file_path, delimiter=delimiter))  # type: ignore
+
 
 def test_split_data():
     data = processor.read_logs()
@@ -33,6 +38,7 @@ def test_split_data():
     assert (len(train_data) / len(data)) == approx(0.6, abs=0.02)
     assert (len(val_data) / len(data)) == approx(0.2, abs=0.02)
     assert (len(test_data) / len(data)) == approx(0.2, abs=0.02)
+
 
 def test_extract_texts_and_labels():
     data = processor.read_logs()

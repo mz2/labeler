@@ -7,10 +7,13 @@ from labeler.evaluator import ClassifierEvaluator
 
 logging.basicConfig(level=logging.INFO)
 
+
 def main(args: argparse.Namespace):
-    if args.mode == "train": 
-        labels_path = Path(args.labels) # type: ignore
-        trainer = ClassifierTrainer(Path(args.logs), TrainingConfig(Path(args.labels), batch_size=2, learning_rate=2e-5, num_epochs=10))
+    if args.mode == "train":
+        labels_path = Path(args.labels)  # type: ignore
+        trainer = ClassifierTrainer(
+            Path(args.logs), TrainingConfig(Path(args.labels), batch_size=2, learning_rate=2e-5, num_epochs=10)
+        )
         trainer.train()
         trainer.save_pretrained(Path(args.save))
 
@@ -18,6 +21,7 @@ def main(args: argparse.Namespace):
         evaluator = ClassifierEvaluator(Path(args.load))
         probabilities = evaluator.infer(args.log)
         print(probabilities)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Multilabel BERT classifier for log files")
@@ -40,6 +44,5 @@ if __name__ == "__main__":
 
     if args.verbose:
         logging.basicConfig(level=logging.DEBUG)
-    
+
     main(args)
-    
