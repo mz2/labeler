@@ -9,103 +9,24 @@ on:
       - main
 
 jobs:
-  setup:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache-key.outputs.key }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip3 install poetry
 
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Cache key
-        id: cache-key
-        run: echo "::set-output name=key::${{ steps.cached-poetry-dependencies.outputs.cache-key }}"
-
-      - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Restore cached venv
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ needs.setup.outputs.cache-key }}
-
-      - name: Install project
-        run: poetry install --no-interaction
-
-      - name: Run tests
-        run: poetry run pytest
-
-  train:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Restore cached venv
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ needs.setup.outputs.cache-key }}
-
-      - name: Train model
-        run: >-
+      - run: poetry install
+      - run: poetry run pytest
+      - run: >-
           poetry run python labeler/cli/main.py train
           --labels tests/fixtures/doctype/labels.csv
           --logs ./tests/fixtures/doctype
           --save tests/fixtures/doctype.model
-
-  formatting:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Restore cached venv
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ needs.setup.outputs.cache-key }}
-
-      - name: Check formatting
-        run: poetry run black --diff --check .
-
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Restore cached venv
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ needs.setup.outputs.cache-key }}
-
-      - name: Run linter
-        run: poetry run flake8
+      - run: poetry run black --diff --check .
+      - run: poetry run flake8
