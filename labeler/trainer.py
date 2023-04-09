@@ -19,6 +19,9 @@ class Metrics:
         self.fnr = fnr
         self.accuracy = accuracy
 
+    def __str__(self):
+        return f"Average loss: {self.average_loss}, FPR: {self.fpr}, FNR: {self.fnr}, Accuracy: {self.accuracy}"
+
 
 class TrainingConfig:
     def __init__(
