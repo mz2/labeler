@@ -124,9 +124,6 @@ class ClassifierTrainer:
                 preds = preds.cpu().numpy()
                 labels = labels.cpu().numpy()
 
-                logging.info(preds)
-                logging.info(labels)
-
                 tp = np.sum((labels == 1) & (preds == 1))
                 fp = np.sum((labels == 0) & (preds == 1))
                 tn = np.sum((labels == 0) & (preds == 0))
