@@ -25,8 +25,17 @@ jobs:
       - run: poetry run black --diff --check .
       - run: poetry run flake8
       - run: poetry run pytest
-      - run: >-
+      - name: Build an example model
+        run: >-
           poetry run python labeler/cli/main.py train
           --labels tests/fixtures/doctype/labels.csv
           --logs ./tests/fixtures/doctype
           --save tests/fixtures/doctype.model
+      - name: Use the example model for inference
+        run: >-
+          poetry run python labeler/cli/main.py infer 
+          --logs ./tests/fixtures/doctype 
+          --load tests/fixtures/doctype.model 
+          --threshold 0.55 
+          --format json 
+          --filter true
