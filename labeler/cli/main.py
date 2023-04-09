@@ -11,9 +11,7 @@ logging.basicConfig(level=logging.INFO)
 def main(args: argparse.Namespace):
     if args.mode == "train":
         labels_path = Path(args.labels)  # type: ignore
-        trainer = ClassifierTrainer(
-            Path(args.logs), TrainingConfig(Path(args.labels), batch_size=2, learning_rate=2e-5, num_epochs=10)
-        )
+        trainer = ClassifierTrainer(Path(args.logs), TrainingConfig(Path(args.labels)))
         trainer.train()
         trainer.save_pretrained(Path(args.save))
 

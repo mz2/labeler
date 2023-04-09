@@ -25,7 +25,7 @@ class TrainingConfig:
         self,
         labels: Path,
         model_type: str = "bert-base-uncased",
-        batch_size: int = 16,
+        batch_size: int = 2,
         learning_rate: float = 2e-5,
         num_epochs: int = 10,
     ):
