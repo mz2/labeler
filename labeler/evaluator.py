@@ -54,7 +54,16 @@ class ClassifierEvaluator:
         for file_path, text in zip(file_paths or [None] * len(log_texts), log_texts):
             probabilities = (
                 torch.sigmoid(
-                    self.model(**self.tokenizer(text, truncation=True, padding=True, return_tensors="pt").to(device)).logits  # type: ignore
+                    self.model(
+                        **self.tokenizer(
+                            text,  # type: ignore
+                            truncation=True,  # type: ignore
+                            padding=True,  # type: ignore
+                            return_tensors="pt",
+                        ).to(
+                            device
+                        )  # type: ignore
+                    ).logits  # type: ignore
                 )
                 .detach()
                 .cpu()
@@ -82,7 +91,10 @@ class ClassifierEvaluator:
             {
                 "path": file_path,
                 "labels": label_names,
-                "probabilities": {self.model.config.id2label[i]: prob for i, prob in enumerate(probabilities)},  # type: ignore
+                "probabilities": {
+                    self.model.config.id2label[i]: prob  # type: ignore
+                    for i, prob in enumerate(probabilities)  # type: ignore
+                },
             }
             for file_path, label_names, probabilities in results
         ]
