@@ -61,10 +61,8 @@ if __name__ == "__main__":
     train_parser.add_argument("--save", help="Directory to save the fine-tuned model and tokenizer", required=True)
     train_parser.add_argument("--logs", help="Path to a directory with log files for training", required=True)
     train_parser.add_argument("--labels", help="Path to a CSV file with labels of input files", required=True)
-    train_parser.add_argument(
-        "--epochs", help="Path to a CSV file with labels of input files", default=10, type=int, required=True
-    )
-    train_parser.add_argument("--batch-size", help="Batch size", default=2, type=int, required=True)
+    train_parser.add_argument("--epochs", help="Path to a CSV file with labels of input files", default=10, type=int)
+    train_parser.add_argument("--batch-size", help="Batch size", default=2, type=int)
 
     infer_parser = subparsers.add_parser("infer", help="Run inference on log files")
     infer_parser.add_argument("--load", help="Directory to load the fine-tuned model and tokenizer from", required=True)
