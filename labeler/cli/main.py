@@ -1,14 +1,12 @@
 import argparse
 import logging
 from pathlib import Path
+from enum import Enum
 
 from labeler.trainer import ClassifierTrainer, TrainingConfig
 from labeler.evaluator import ClassifierEvaluator
 
 logging.basicConfig(level=logging.INFO)
-
-
-from enum import Enum
 
 
 class OutputFormat(Enum):
@@ -28,7 +26,6 @@ class OutputFormat(Enum):
 
 def main(args: argparse.Namespace):
     if args.mode == "train":
-        labels_path = Path(args.labels)  # type: ignore
         trainer = ClassifierTrainer(Path(args.logs), TrainingConfig(Path(args.labels)))
         trainer.train()
         trainer.save_pretrained(Path(args.save))
@@ -41,7 +38,7 @@ def main(args: argparse.Namespace):
         # output to CSV by default since it's assumed easier to read from stdout
         output_format = OutputFormat.CSV
 
-        if args.format == OutputFormat.UNKNOWN and output_file != None:
+        if args.format == OutputFormat.UNKNOWN and output_file is not None:
             output_format = OutputFormat.infer_from_output(Path(args.output))
         elif args.format != OutputFormat.UNKNOWN:
             output_format = args.format

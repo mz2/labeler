@@ -6,7 +6,6 @@ from .device import get_device
 import torch
 import numpy as np
 
-from transformers import BertForSequenceClassification  # type: ignore
 from transformers import AutoTokenizer, AutoModelForSequenceClassification  # type: ignore
 from torch.utils.data import DataLoader, TensorDataset
 from pathlib import Path
