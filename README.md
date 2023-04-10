@@ -8,19 +8,89 @@ Tested with [`bert-base-uncased`](https://huggingface.co/bert-base-uncased), but
 
 - [poetry](https://python-poetry.org/docs/) (e.g. `apt install python3-poetry` or `brew install poetry`)
 
-## Example
+## Running instructions
 
-To run labeler, first install the prerequisites, then run the tool with `poetry run python labeler/cli/main.py`.
+To run `labeler`, first install the prerequisites, then run the tool with `poetry run python labeler/cli/main.py`. You will get more detailed running instructions with the `--help` command line flag, but in short there are two modes:
 
-A trivial example case problem is provided in the repo under `tests/fixtures/doctype` with a bunch of HTML, Markdown JSON, YAML files labeled in `tests/fixtures/doctype/labels.csv` with their respective file types. The requirements for input data are:
+- `train`: train a multi-label classifier model (i.e. fine tune a transformer model type of interest for multi-label classification, with `--model-type` used for passing the model type in case you want to use something other than the default `bert-base-uncased`).
+- `infer`: make predictions with a trained model.
 
-- A CSV file with two columns: `path` (a relative path from the CSV file to the location of the file in question) and `labels` (a space separated list of labels).
-- Files that contain the actual text data (i.e. the files that the `path` field in the above-mentioned CSV points at).
+## Input data for training
+
+The requirements for input data to `labeler` are:
+
+1. A CSV file with two columns:
+
+- `path` (a relative path from the CSV file to the location of the file in question)
+- `labels` (a space separated list of labels).
+
+2. Files containing the actual text data (i.e. the files that the `path` field in the above-mentioned CSV points at).
+
+You can find an example set of data under `tests/fixtures`.
+
+## Example: train a model, use it for inference
+
+A trivial example case problem is provided in the repo under `tests/fixtures/doctype` with a bunch of HTML, Markdown JSON, YAML files labeled in `tests/fixtures/doctype/labels.csv` with their respective file types, with some instances of the different types of files including content about… mammals (yes, mammals) and not mammals (i.e. the files can be classified as either relating to mammals or not, this being another classification dimension beyond the file types).
+
+For reference, the contents of `tests/fixtures/doctype/labels.csv` look like as follows:
+
+```csv
+path;labels
+./html/0.html;html
+./html/1.html;html
+./html/2.html;html
+./html/3.html;html
+./html/4.html;html
+…
+./html/aye-aye.html;html mammal
+./html/fennec_fox.html;html mammal
+./html/platypus.html;html mammal
+./html/red_panda.html;html mammal
+./html/slow_loris.html;html mammal
+./md/0.md;md
+./md/1.md;md
+./md/2.md;md
+./md/3.md;md
+…
+./md/dolphin.md;md mammal
+./md/giraffe.md;md mammal
+./md/platypus.md;md mammal
+…
+./yaml/0.yaml;yaml
+./yaml/1.yaml;yaml
+./yaml/2.yaml;yaml
+…
+./yaml/african_elephant.yaml;yaml mammal
+./yaml/blue_whale.yaml;yaml mammal
+./yaml/giraffe.yaml;yaml mammal
+…
+./json/0.json;json
+./json/1.json;json
+./json/2.json;json
+…
+./json/giraffe.json;json mammal
+./json/more_mammals.json;json mammal
+./json/more_and_more_mammals.json;json mammal
+```
+
+To build the model, run the following command in the root of the repository:
 
 ```bash
-poetry install
-poetry run python labeler/cli/main.py train \
+TOKENIZERS_PARALLELISM=false \
+poetry run python labeler/cli/main.py --verbose train \
 --labels tests/fixtures/doctype/labels.csv \
 --logs ./tests/fixtures/doctype \
---save tests/fixtures/doctype.model
+--save tests/fixtures/doctype.model \
+--batch-size 4 --epochs 100
+```
+
+To make predictions with the model, run the following command in the root of the repository:
+
+```bash
+poetry run python labeler/cli/main.py --verbose infer \
+--logs ./tests/fixtures/doctype/md \
+--load tests/fixtures/doctype.model \
+--format json \
+--threshold 0.5 \
+--filter true
 ```
