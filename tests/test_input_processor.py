@@ -35,7 +35,7 @@ def test_read_logs():
         tokenizer=AutoTokenizer.from_pretrained("bert-base-cased")
     )
     assert isinstance(data, pd.DataFrame)
-    assert labels == ["html", "json", "md", "yaml"]
+    assert labels == ["html", "json", "mammal", "md", "yaml"]
     assert sorted(labels_to_index.keys()) == labels
     assert sorted(index_to_labels.keys()) == [0, 1, 2, 3]
 
