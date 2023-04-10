@@ -37,7 +37,7 @@ def test_read_logs():
     assert isinstance(data, pd.DataFrame)
     assert labels == ["html", "json", "mammal", "md", "yaml"]
     assert sorted(labels_to_index.keys()) == labels
-    assert sorted(index_to_labels.keys()) == [0, 1, 2, 3]
+    assert sorted(index_to_labels.keys()) == [0, 1, 2, 3, 4]
 
     assert len(data) == len(pd.read_csv(labels_file_path, delimiter=delimiter))  # type: ignore
 
