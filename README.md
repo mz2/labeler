@@ -28,7 +28,7 @@ The requirements for input data to `labeler` are:
 
 You can find an example set of data under `tests/fixtures`.
 
-## Example: train a model, use it for inference
+## How to train a model, use it for inference
 
 A trivial example case problem is provided in the repo under `tests/fixtures/doctype` with a bunch of HTML, Markdown JSON, YAML files labeled in `tests/fixtures/doctype/labels.csv` with their respective file types, with some instances of the different types of files including content about… mammals (yes, mammals) and not mammals (i.e. the files can be classified as either relating to mammals or not, this being another classification dimension beyond the file types).
 
@@ -147,3 +147,16 @@ This will produce output like follows (use `--format csv` if you need a tabular 
   }
 ]
 ```
+
+## How to work with the weebl log analysis & bug reporting
+
+1. preprocess the input data:
+
+```bash
+poetry run python tests/fixtures/weebl/process.py \
+-i tests/fixtures/weebl/weebl_training_data.tar.gz -o \
+tests/fixtures/weebl/processed \
+-c tests/fixtures/weebl/processed/labels.csv
+```
+
+THen
