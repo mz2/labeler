@@ -16,6 +16,11 @@ path;labels
 ./html/14.html;html
 ./html/16.html;html
 ./html/17.html;html
+./html/aye-aye.html;html mammal
+./html/fennec_fox.html;html mammal
+./html/platypus.html;html mammal
+./html/red_panda.html;html mammal
+./html/slow_loris.html;html mammal
 ./md/0.md;md
 ./md/1.md;md
 ./md/2.md;md
@@ -27,11 +32,18 @@ path;labels
 ./md/8.md;md
 ./md/9.md;md
 ./md/10.md;md
-./md/11.md;md
 ./md/12.md;md
 ./md/13.md;md
 ./md/14.md;md
 ./md/15.md;md
+./md/dolphin.md;md mammal
+./md/giraffe.md;md mammal
+./md/platypus.md;md mammal
+./md/red_panda.md;md mammal
+./md/slow_loris.md;md mammal
+./md/dolphin.md;md mammal
+./md/giraffe.md;md mammal
+./md/platypus.md;md mammal
 ./yaml/0.yaml;yaml
 ./yaml/1.yaml;yaml
 ./yaml/2.yaml;yaml
@@ -42,6 +54,14 @@ path;labels
 ./yaml/7.yaml;yaml
 ./yaml/8.yaml;yaml
 ./yaml/9.yaml;yaml
+./yaml/african_elephant.yaml;yaml mammal
+./yaml/blue_whale.yaml;yaml mammal
+./yaml/giraffe.yaml;yaml mammal
+./yaml/grizzly_bear.yaml;yaml mammal
+./yaml/hippopotamus.yaml;yaml mammal
+./yaml/polar_bear.yaml;yaml mammal
+./yaml/rhinoceros.yaml;yaml mammal
+./yaml/siberian_tiger.yaml;yaml mammal
 ./json/0.json;json
 ./json/1.json;json
 ./json/2.json;json
@@ -50,3 +70,6 @@ path;labels
 ./json/5.json;json
 ./json/6.json;json
 ./json/7.json;json
+./json/giraffe.json;json mammal
+./json/more_mammals.json;json mammal
+./json/more_and_more_mammals.json;json mammal

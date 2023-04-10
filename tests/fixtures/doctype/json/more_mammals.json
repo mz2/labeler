@@ -1,0 +1,28 @@
+{
+    "animals": [
+        {
+            "name": "Okapi",
+            "category": "Even-toed ungulate",
+            "habitat": "Rainforest",
+            "range": "Central Africa",
+            "diet": "Herbivorous",
+            "conservation_status": "Endangered",
+            "average_lifespan": "20-30 years",
+            "description": "The okapi is a giraffid artiodactyl mammal native to the northeast of the Democratic Republic of the Congo in Central Africa.",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Okapi_%28Okapia_johnstoni%29_male_2.jpg/330px-Okapi_%28Okapia_johnstoni%29_male_2.jpg"
+        },
+        {
+            "name": "Platypus",
+            "category": "Monotreme",
+            "habitat": "Rivers and streams",
+            "range": "Eastern Australia, including Tasmania",
+            "diet": "Carnivorous",
+            "conservation_status": "Near Threatened",
+            "average_lifespan": "10-15 years",
+            "description": "The platypus is a semiaquatic egg-laying mammal that is endemic to eastern Australia, including Tasmania.",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Platypus_%282%29.jpg/330px-Platypus_%282%29.jpg",
+            "venomous": true,
+            "webbed_feet": true
+        }
+    ]
+}

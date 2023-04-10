@@ -5,6 +5,8 @@ from transformers import Trainer, TrainingArguments, PreTrainedModel, AutoTokeni
 from datasets import Dataset  # type: ignore
 from pathlib import Path
 
+from torch import backends
+
 
 class TrainingConfig:
     def __init__(
@@ -60,7 +62,7 @@ class ClassifierTrainer:
             num_train_epochs=self.training_config.num_epochs,
             warmup_steps=500,
             weight_decay=0.01,
-            use_mps_device=True,
+            use_mps_device=backends.mps.is_available(),  # type: ignore
             label_names=self.labels,
             load_best_model_at_end=True,
             report_to=["tensorboard"],

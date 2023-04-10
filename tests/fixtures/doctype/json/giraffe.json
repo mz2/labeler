@@ -1,0 +1,15 @@
+{
+    "animals": [
+        {
+            "name": "Giraffe",
+            "category": "Even-toed ungulate",
+            "habitat": "Open woodland, grassland and savanna",
+            "range": "Africa",
+            "diet": "Herbivorous",
+            "conservation_status": "Least Concern",
+            "average_lifespan": "25 years",
+            "description": "The giraffe is an African artiodactyl mammal, the tallest living terrestrial animal and the largest ruminant.",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Giraffe_Mikumi_National_Park.jpg/330px-Giraffe_Mikumi_National_Park.jpg"
+        }
+    ]
+}

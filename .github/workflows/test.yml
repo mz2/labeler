@@ -36,6 +36,6 @@ jobs:
           poetry run python labeler/cli/main.py infer 
           --logs ./tests/fixtures/doctype 
           --load tests/fixtures/doctype.model 
-          --threshold 0.55 
+          --threshold 0.5
           --format json 
           --filter true

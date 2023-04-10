@@ -1,0 +1,15 @@
+[
+    {
+        "name": "Slow Loris",
+        "category": "Primate",
+        "habitat": "Tropical rainforests",
+        "range": "Southeast Asia",
+        "diet": "Omnivorous",
+        "conservation_status": "Vulnerable",
+        "average_lifespan": "20-25 years",
+        "description": "The slow loris is a strepsirrhine primate and a venomous nocturnal prosimian native to Southeast Asia.",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Slow_loris_Poronophthalmus.jpg/330px-Slow_loris_Poronophthalmus.jpg",
+        "nocturnal": true,
+        "venomous": true
+    }
+]
