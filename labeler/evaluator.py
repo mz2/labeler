@@ -1,88 +1,82 @@
 import csv
 import json
+import logging
 import sys
 from typing import IO, List, Optional, Tuple
-from .device import get_device
 
 import torch
 
-from transformers import AutoModelForSequenceClassification, AutoTokenizer  # type: ignore
+from transformers import PreTrainedModel, AutoModelForSequenceClassification, AutoTokenizer, PreTrainedTokenizer, PreTrainedTokenizerFast  # type: ignore
 from pathlib import Path
 
 
 class ClassifierEvaluator:
-    def __init__(self, directory: Path) -> None:
-        self.tokenizer: AutoTokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(directory)  # type: ignore
+    def __init__(
+        self,
+        directory: Path,
+        model: PreTrainedModel | None = None,
+        tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast | None = None,
+    ) -> None:
+        if tokenizer is None:
+            logging.debug("Loading tokenizer from %s", directory)
+            self.tokenizer = AutoTokenizer.from_pretrained(directory)  # type: ignore
+        else:
+            self.tokenizer = tokenizer
 
-        self.model: AutoModelForSequenceClassification
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            directory, problem_type="multi_label_classification"
-        )  # type: ignore
+        if model is None:
+            self.model = AutoModelForSequenceClassification.from_pretrained(
+                directory, problem_type="multi_label_classification"
+            )
+        else:
+            self.model = model
 
-    def __read_log_files(self, log_file_path: Path | List[str]) -> Tuple[List[Path] | None, List[str]]:
-        if isinstance(log_file_path, Path):
-            if log_file_path.is_dir():
-                log_files = [Path(log_file) for log_file in log_file_path.glob("**/*") if log_file.is_file()]
-            elif log_file_path.is_file():
-                log_files = [Path(log_file_path)]
+    def read_files(self, file_path: Path | List[str]) -> Tuple[List[Path] | None, List[str]]:
+        if isinstance(file_path, Path):
+            if file_path.is_dir():
+                files = [Path(log_file) for log_file in file_path.glob("**/*") if log_file.is_file()]
+            elif file_path.is_file():
+                files = [Path(file_path)]
             else:
                 raise ValueError("Invalid log file path (should be a file or a directory)")
 
-            log_texts: list[str] = []
+            texts: list[str] = []
 
-            for log_file in log_files:
+            for log_file in files:
                 with open(log_file, "r") as f:
                     log_text = f.read()
-                log_texts.append(log_text)
+                texts.append(log_text)
 
-            return log_files, log_texts
+            return files, texts
         else:
-            log_texts = log_file_path
+            log_texts = file_path
             return None, log_texts
+
+    def predict_labels(self, texts: List[str], threshold: float = 0.5) -> Tuple[List[List[str]], torch.Tensor]:
+        inputs = self.tokenizer(texts, padding=True, truncation=True, return_tensors="pt")
+        outputs = self.model(**inputs)
+        logits = outputs.logits
+        probs = torch.sigmoid(logits)
+        binary_preds = probs > threshold
+        predicted_labels = []
+        for preds in binary_preds:
+            label_indices = torch.where(preds)[0]
+            labels = [self.model.config.id2label[label_idx.item()] for label_idx in label_indices]  # type: ignore
+            predicted_labels.append(labels)
+        return (predicted_labels, probs)
 
     def infer(
         self, log_file_path: Path | List[str], threshold: float = 0.5, filter_empty: bool = False
     ) -> List[Tuple[str, str, List[float]]]:
-        self.model.eval()  # type: ignore
-        device = get_device()
-        self.model.to(device)  # type: ignore
+        file_paths, texts = self.read_files(log_file_path)
 
-        file_paths, log_texts = self.__read_log_files(log_file_path)
+        predicted_labels, logits = self.predict_labels(texts, threshold=threshold)
 
         results = []
-        for file_path, text in zip(file_paths or [None] * len(log_texts), log_texts):
-            probabilities = (
-                torch.sigmoid(
-                    self.model(
-                        **self.tokenizer(
-                            text,  # type: ignore
-                            truncation=True,  # type: ignore
-                            padding=True,  # type: ignore
-                            return_tensors="pt",
-                        ).to(
-                            device
-                        )  # type: ignore
-                    ).logits  # type: ignore
-                )
-                .detach()
-                .cpu()
-                .numpy()[0]
-                .tolist()
-            )
-
-            # Get labels above the threshold probability
-            labels_above_threshold = [
-                self.model.config.id2label[label_id]  # type: ignore
-                for label_id, probability in enumerate(probabilities)
-                if probability >= threshold
-            ]
-            label_names = " ".join(labels_above_threshold)
-
-            if filter_empty and not labels_above_threshold:
+        for file_path, labels, probs in zip(file_paths or [None] * len(texts), predicted_labels, logits):
+            label_names = " ".join(labels)
+            if filter_empty and not labels:
                 continue
-
-            results.append((str(file_path), label_names, probabilities))
+            results.append((str(file_path), label_names, probs.tolist()))
 
         return results
 

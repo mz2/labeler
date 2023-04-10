@@ -14,7 +14,8 @@ path;labels
 ./html/12.html;html
 ./html/13.html;html
 ./html/14.html;html
-./html/15.html;html
+./html/16.html;html
+./html/17.html;html
 ./md/0.md;md
 ./md/1.md;md
 ./md/2.md;md
@@ -39,6 +40,8 @@ path;labels
 ./yaml/5.yaml;yaml
 ./yaml/6.yaml;yaml
 ./yaml/7.yaml;yaml
+./yaml/8.yaml;yaml
+./yaml/9.yaml;yaml
 ./json/0.json;json
 ./json/1.json;json
 ./json/2.json;json

@@ -27,9 +27,15 @@ class OutputFormat(Enum):
 def main(args: argparse.Namespace):
     if args.mode == "train":
         trainer = ClassifierTrainer(
-            Path(args.logs), TrainingConfig(Path(args.labels), batch_size=args.batch_size, num_epochs=args.epochs)
+            Path(args.logs),
+            TrainingConfig(
+                output_directory=Path(args.save),
+                labels_csv=Path(args.labels),
+                batch_size=args.batch_size,
+                num_epochs=args.epochs,
+            ),
         )
-        trainer.train()
+        trainer.train_v2()
         trainer.save_pretrained(Path(args.save))
 
     elif args.mode == "infer":
@@ -54,6 +60,7 @@ def main(args: argparse.Namespace):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Multilabel BERT classifier for log files")
     parser.add_argument("--model-type", help="Transformer model to use", default="bert-base-uncased")
+    parser.add_argument("-v", "--verbose", help="Increase output verbosity", action="store_true")
 
     subparsers = parser.add_subparsers(dest="mode", required=True, help="Mode of operation: train or infer")
 
@@ -67,7 +74,7 @@ if __name__ == "__main__":
     infer_parser = subparsers.add_parser("infer", help="Run inference on log files")
     infer_parser.add_argument("--load", help="Directory to load the fine-tuned model and tokenizer from", required=True)
     infer_parser.add_argument("--logs", help="Path to a directory with log files for inference", required=True)
-    infer_parser.add_argument("--threshold", help="Probability threshold", required=True, default=0.5, type=float)
+    infer_parser.add_argument("--threshold", help="Probability threshold", default=0.5, type=float)
     infer_parser.add_argument("--output", help="File to save the output CSV (use '-' for stdout)", default="-")
     infer_parser.add_argument(
         "--filter", help="Filter out results where no prediction is made", type=bool, default=False
@@ -81,9 +88,6 @@ if __name__ == "__main__":
         default=OutputFormat.UNKNOWN,
         metavar="FORMAT",
     )
-
-    parser.add_argument("-v", "--verbose", help="Increase output verbosity", action="store_true")
-
     args = parser.parse_args()
 
     if args.verbose:
