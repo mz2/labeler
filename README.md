@@ -84,7 +84,9 @@ poetry run python labeler/cli/main.py --verbose train \
 --batch-size 4 --epochs 100
 ```
 
-To make predictions with the model, run the following command in the root of the repository:
+This will output training related summary stats, checkpointing the model every few seconds and eventually saving the best model achieved during the 100 epochs.
+
+To make predictions with the model that was produced by above command at `test/fixtures/doctype.model`, run the following command in the root of the repository:
 
 ```bash
 poetry run python labeler/cli/main.py --verbose infer \
@@ -93,4 +95,55 @@ poetry run python labeler/cli/main.py --verbose infer \
 --format json \
 --threshold 0.5 \
 --filter true
+```
+
+This will produce output like follows (use `--format csv` if you need a tabular output instead):
+
+```json
+[
+  {
+    "path": "tests/fixtures/doctype/md/5.md",
+    "labels": "md",
+    "probabilities": {
+      "html": 0.3720129728317261,
+      "json": 0.2977072596549988,
+      "mammal": 0.37781280279159546,
+      "md": 0.5835364460945129,
+      "yaml": 0.3477823734283447
+    }
+  },
+  {
+    "path": "tests/fixtures/doctype/md/1.md",
+    "labels": "md",
+    "probabilities": {
+      "html": 0.3393593728542328,
+      "json": 0.2965734899044037,
+      "mammal": 0.3827342391014099,
+      "md": 0.5878880023956299,
+      "yaml": 0.37681934237480164
+    }
+  },
+  {
+    "path": "tests/fixtures/doctype/md/0.md",
+    "labels": "md",
+    "probabilities": {
+      "html": 0.36037471890449524,
+      "json": 0.2977195978164673,
+      "mammal": 0.376987487077713,
+      "md": 0.560240626335144,
+      "yaml": 0.3395785093307495
+    }
+  },
+  {
+    "path": "tests/fixtures/doctype/md/4.md",
+    "labels": "md",
+    "probabilities": {
+      "html": 0.3500433564186096,
+      "json": 0.2909952998161316,
+      "mammal": 0.3694528043270111,
+      "md": 0.5649592876434326,
+      "yaml": 0.37255150079727173
+    }
+  }
+]
 ```

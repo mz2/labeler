@@ -1,0 +1,11 @@
+{
+    "name": "Giant Panda",
+    "scientific_name": "Ailuropoda melanoleuca",
+    "habitat": "Mountainous regions of central China",
+    "diet": "Bamboo",
+    "lifespan": "Up to 20 years",
+    "weight": "Up to 330 lbs (150 kg)",
+    "size": "Up to 5 feet (1.5 meters) long",
+    "conservation_status": "Endangered",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG"
+}

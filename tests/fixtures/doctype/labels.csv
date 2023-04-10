@@ -73,3 +73,9 @@ path;labels
 ./json/giraffe.json;json mammal
 ./json/more_mammals.json;json mammal
 ./json/more_and_more_mammals.json;json mammal
+./json/african_elephant.json;json mammal
+./json/arctic_fox.json;json mammal
+./json/bengal_tiger.json;json mammal
+./json/giant_panda.json;json mammal
+./json/giraffe.json;json mammal
+./json/grey_wolf.json;json mammal

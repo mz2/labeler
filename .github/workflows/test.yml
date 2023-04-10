@@ -31,6 +31,7 @@ jobs:
           --labels tests/fixtures/doctype/labels.csv
           --logs ./tests/fixtures/doctype
           --save tests/fixtures/doctype.model
+          --epochs 2 # training on CPU extremely slow, hence just two epochs.
       - name: Use the example model for inference
         run: >-
           poetry run python labeler/cli/main.py infer 
