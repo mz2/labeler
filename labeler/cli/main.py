@@ -31,11 +31,13 @@ def main(args: argparse.Namespace):
             TrainingConfig(
                 output_directory=Path(args.save),
                 labels_csv=Path(args.labels),
+                model_type=args.model_type,
+                min_samples_per_label=args.min_samples,
                 batch_size=args.batch_size,
                 num_epochs=args.epochs,
             ),
         )
-        trainer.train_v2()
+        trainer.train()
         trainer.save_pretrained(Path(args.save))
 
     elif args.mode == "infer":
@@ -69,6 +71,8 @@ if __name__ == "__main__":
     train_parser.add_argument("--logs", help="Path to a directory with log files for training", required=True)
     train_parser.add_argument("--labels", help="Path to a CSV file with labels of input files", required=True)
     train_parser.add_argument("--epochs", help="Path to a CSV file with labels of input files", default=10, type=int)
+    train_parser.add_argument("--min-samples", help="Minimum number of samples", default=1, type=int)
+
     train_parser.add_argument("--batch-size", help="Batch size", default=2, type=int)
 
     infer_parser = subparsers.add_parser("infer", help="Run inference on log files")

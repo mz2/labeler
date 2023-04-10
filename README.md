@@ -150,13 +150,29 @@ This will produce output like follows (use `--format csv` if you need a tabular 
 
 ## How to work with the weebl log analysis & bug reporting
 
-1. preprocess the input data:
+Another example problem provided in the repository is a log analysis and bug triaging problem: `tests/fixtures/weebl/weebl_training_data.tar.gz` contains examples of
+
+1. Install `git-lfs` following [installation instructions](https://github.com/git-lfs/git-lfs/blob/main/INSTALLING.md).
+
+2. `git lfs install` in the root of the repository (once).
+
+3. Preprocess the input data:
 
 ```bash
 poetry run python tests/fixtures/weebl/process.py \
--i tests/fixtures/weebl/weebl_training_data.tar.gz -o \
-tests/fixtures/weebl/processed \
+-i tests/fixtures/weebl/weebl_training_data.tar.gz \
+-o tests/fixtures/weebl/processed \
 -c tests/fixtures/weebl/processed/labels.csv
 ```
 
-THen
+3. Train a model:
+
+```bash
+TOKENIZERS_PARALLELISM=false \
+poetry run python labeler/cli/main.py --verbose train \
+--labels tests/fixtures/weebl/processed/labels.csv \
+--logs ./tests/fixtures/weebl/processed \
+--save tests/fixtures/weebl.model \
+--batch-size 2 \
+--epochs 80
+```

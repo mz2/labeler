@@ -18,12 +18,11 @@ def get_files(directory: str, suffix: str = "_0.txt") -> List[str]:
 def main(input_path: str, output_dir: str, csv_filename: str):
     os.makedirs(output_dir, exist_ok=True)
 
-    # Check if input is a tar.gz file
     if input_path.endswith(".tar.gz"):
         with tempfile.TemporaryDirectory() as temp_dir:
             with tarfile.open(input_path, "r:gz") as tar:
                 tar.extractall(temp_dir)
-            process_files(temp_dir, output_dir, csv_filename)
+            process_files(os.path.join(temp_dir, "data"), output_dir, csv_filename)
     else:
         process_files(input_path, output_dir, csv_filename)
 
@@ -35,6 +34,7 @@ def process_files(input_dir: str, output_dir: str, csv_filename: str):
     for directory in directories:
         bug_id = os.path.basename(directory)
         output_subdir = os.path.join(output_dir, bug_id)
+
         os.makedirs(output_subdir, exist_ok=True)
 
         for file in get_files(directory):
@@ -42,7 +42,7 @@ def process_files(input_dir: str, output_dir: str, csv_filename: str):
             dst = os.path.join(output_subdir, file)
 
             shutil.copy(src, dst)
-            csv_rows.append([dst, bug_id])
+            csv_rows.append([os.path.join(bug_id, file), bug_id])
 
     with open(csv_filename, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=";")
