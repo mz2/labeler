@@ -1,18 +1,12 @@
 import logging
-import numpy as np
 import torch
-import matplotlib.pyplot as plt
-import os
 
-from typing import Dict
 from .input_processor import InputProcessor
 
-from transformers import EvalPrediction, Trainer, TrainingArguments, PreTrainedModel, AutoTokenizer, AutoModelForSequenceClassification  # type: ignore
-from transformers.trainer_utils import PredictionOutput  # type: ignore
+from transformers import Trainer, TrainingArguments, PreTrainedModel, AutoTokenizer, AutoModelForSequenceClassification  # type: ignore
 from datasets import Dataset  # type: ignore
 from pathlib import Path
 from datetime import datetime
-from sklearn.metrics import confusion_matrix, roc_curve, auc
 
 
 class TrainingConfig:

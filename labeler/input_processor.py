@@ -49,9 +49,7 @@ class InputProcessor:
     def read_data(
         self, tokenizer: PreTrainedTokenizer | PreTrainedTokenizerFast
     ) -> Tuple[DataFrame, List[str], Dict[str, int], Dict[int, str]]:
-        labels_data = read_csv(
-            self.labels_file_path, delimiter=self.csv_delimiter, dtype={"path": "string", "labels": "string"}
-        )
+        labels_data = read_csv(self.labels_file_path, delimiter=self.csv_delimiter)
         labels_data["labels"] = labels_data["labels"].str.split().sort_values()
 
         labels_data = InputProcessor.filter_labels_by_count(labels_data, min_count=self.min_samples_per_label)
