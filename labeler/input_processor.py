@@ -91,7 +91,7 @@ class InputProcessor:
                 token_type_ids.append(tokenized_input["token_type_ids"])
 
         logging.info("Tokenizing input…")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
+        with concurrent.futures.ProcessPoolExecutor() as executor:
             futures = [executor.submit(tokenize_text, row) for _, row in labels_data.iterrows()]
             for future in tqdm(concurrent.futures.as_completed(futures), total=len(futures)):
                 future.result()
