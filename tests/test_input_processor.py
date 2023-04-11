@@ -12,8 +12,9 @@ def setup_module():
     global processor, log_files_dir, labels_file_path, delimiter
     log_files_dir = Path("tests/fixtures/doctype")
     labels_file_path = log_files_dir / "labels.csv"
+    min_samples = 1
     delimiter = ";"
-    processor = InputProcessor(log_files_dir, labels_file_path, delimiter)
+    processor = InputProcessor(log_files_dir, labels_file_path, min_samples, delimiter)
 
 
 @pytest.mark.unit
