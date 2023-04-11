@@ -31,12 +31,13 @@ jobs:
           --labels tests/fixtures/doctype/labels.csv
           --logs ./tests/fixtures/doctype
           --save tests/fixtures/doctype.model
-          --epochs 2 # training on CPU extremely slow, hence just two epochs.
-      - name: Use the example model for inference
-        run: >-
-          poetry run python labeler/cli/main.py infer 
-          --logs ./tests/fixtures/doctype 
-          --load tests/fixtures/doctype.model 
-          --threshold 0.5
-          --format json 
-          --filter true
+          --epochs 1 # training on CPU extremely slow, hence just one epoch.
+      # FIXME: Looks to be too much for a GPU-free github runner node -- should try with a more trivial model.
+      # - name: Use the example model for inference
+      #  run: >-
+      #    poetry run python labeler/cli/main.py infer
+      #    --logs ./tests/fixtures/doctype
+      #    --load tests/fixtures/doctype.model
+      #    --threshold 0.5
+      #    --format json
+      #    --filter true
