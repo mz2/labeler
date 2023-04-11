@@ -134,8 +134,7 @@ class InputProcessor:
     def sorted_labels(labels_data: DataFrame) -> List[str]:
         labels = set()
         for _, row in labels_data.iterrows():
-            for label in row["labels"]:
-                labels.add(label)
+            labels.update(row["labels"])
         return sorted(labels)
 
     def split_data(
