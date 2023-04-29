@@ -182,7 +182,7 @@ poetry run python labeler/cli/main.py --verbose train \
 You'll find a helper tool under `uploader/cli/upload.py` that allows uploading text data to a Label Studio instance (with which it is the intention to provide a training loop).
 
 ```bash
-poetry run uploader/cli/upload.py <input_file1> <input_file2> ... -a <auth> -lh <host> -p <proj> [-s <size>] [-o <overlap>]
+poetry run uploader/cli/upload.py <input_file1> <input_file2> ... -a <auth> -lh <host> -p <proj> [-s <size>] [-o <overlap>] [-b <max_bytes>]
 ```
 
 Replace <input_file1>, <input_file2>, <auth>, <host>, <proj>, <size>, and <overlap> with the appropriate values.
@@ -191,7 +191,8 @@ Replace <input_file1>, <input_file2>, <auth>, <host>, <proj>, <size>, and <overl
 - <auth>: The authorization token for Label Studio.
 - <host>: The Label Studio hostname.
 - <proj>: The project ID in Label Studio.
-- <size> (optional): The size of the batch in number of lines (default: 10).
+- <size> (optional): The size of the batch in number of lines (default: 512).
 - <overlap> (optional): The number of overlapping lines between batches (default: 0).
+- <max_bytes> (optional): The max # of bytes per batch
 
-The script will upload the input files to the specified Label Studio instance, batching the data in windows of the defined size and overlap.
+The script will upload the input files to the specified Label Studio instance, batching the data in windows of the defined line count and max byte count per batch and overlapping lines. The batch size is pretty approximately enforced still (data is not truncated at the time of writing in the middle of the line for example).
