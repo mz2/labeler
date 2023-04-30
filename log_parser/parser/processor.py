@@ -89,25 +89,18 @@ def mask_uuid_substrings(param: str) -> str:
     return param
 
 
-def filter_debug_lines(lines: List[str], n: int) -> List[str]:
-    filtered_lines = []
-    debug_lines = []
-    non_debug_index = None
+def filter_uninteresting_lines(lines: List[str], n: int) -> List[str]:
+    is_filtered_line = [True if re.search(r"\bDEBUG\b", line) else False for line in lines]
 
-    for i, line in enumerate(lines):
-        if " DEBUG " in line:
-            debug_lines.append(line)
-            if len(debug_lines) > n:
-                debug_lines.pop(0)
-            if non_debug_index is not None and i - non_debug_index <= n:
-                filtered_lines.append(line)
-        else:
-            non_debug_index = i
-            if debug_lines:
-                filtered_lines += debug_lines
-                debug_lines = []
-            filtered_lines.append(line)
+    non_debug_indexes = [i for i, _ in enumerate(lines) if not is_filtered_line[i]]
+    for i in non_debug_indexes:
+        start_index = max(0, i - n)
+        end_index = min(len(lines) - 1, i + n)
 
+        for j in range(start_index, end_index + 1):
+            is_filtered_line[j] = False
+
+    filtered_lines = [lines[i] for i in range(len(lines)) if not is_filtered_line[i]]
     return filtered_lines
 
 

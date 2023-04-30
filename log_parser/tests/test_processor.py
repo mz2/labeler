@@ -1,6 +1,6 @@
 from typing import List
 import pytest
-from parser.processor import filter_params, filter_debug_lines
+from parser.processor import filter_params, filter_uninteresting_lines
 
 
 @pytest.mark.parametrize(
@@ -30,13 +30,13 @@ def test_filter_unwanted_params(params: List[str], expected: List[str]):
 def test_filter_debug_lines_simple():
     input_lines = ["line 1\n", "line 2\n", "line 3\n", "line 4 DEBUG line\n", "line 5 DEBUG line\n"]
     expected_output = ["line 1\n", "line 2\n", "line 3\n", "line 4 DEBUG line\n"]
-    assert filter_debug_lines(input_lines, n=1) == expected_output
+    assert filter_uninteresting_lines(input_lines, n=1) == expected_output
 
 
 def test_filter_debug_lines_with_two_windows():
     input_lines = ["line 1\n", "line 2\n", "line 3\n", "line 4 DEBUG line\n", "line 5 DEBUG line\n", "line 6\n"]
     expected_output = ["line 1\n", "line 2\n", "line 3\n", "line 4 DEBUG line\n", "line 5 DEBUG line\n", "line 6\n"]
-    assert filter_debug_lines(input_lines, n=1) == expected_output
+    assert filter_uninteresting_lines(input_lines, n=1) == expected_output
 
 
 def test_filter_debug_lines_with_two_windows_and_tail_to_trim():
@@ -59,7 +59,7 @@ def test_filter_debug_lines_with_two_windows_and_tail_to_trim():
         "line 6\n",
         "line 7 DEBUG line\n",
     ]
-    assert filter_debug_lines(input_lines, n=1) == expected_output
+    assert filter_uninteresting_lines(input_lines, n=1) == expected_output
 
 
 def test_filter_debug_lines_with_two_windows_and_a_line_in_between_to_trim():
@@ -83,4 +83,78 @@ def test_filter_debug_lines_with_two_windows_and_a_line_in_between_to_trim():
         "line 7\n",
         "line 8 DEBUG line\n",
     ]
-    assert filter_debug_lines(input_lines, n=1) == expected_output
+    assert filter_uninteresting_lines(input_lines, n=1) == expected_output
+
+
+def test_filter_debug_lines():
+    log_lines = [
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: systemctl start postgresql",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "INFO [root@<IP>]: Postgres replication set up successfully",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "INFO [root@<IP>]: Postgres service disabled",
+        "DEBUG [root@<IP>]: systemctl disable postgresql.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "INFO [root@<IP>]: Pacemaker and Corosync installed",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+    ]
+
+    expected_lines_window_1 = [
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: systemctl start postgresql",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "INFO [root@<IP>]: Postgres replication set up successfully",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "INFO [root@<IP>]: Postgres service disabled",
+        "DEBUG [root@<IP>]: systemctl disable postgresql.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "INFO [root@<IP>]: Pacemaker and Corosync installed",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+    ]
+
+    expected_lines_window_2 = [
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: systemctl start postgresql",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "DEBUG [root@<IP>]: sudo -u postgres pg_basebackup -h -D /var/lib/postgresql/12/main -v --wal-method=stream",
+        "INFO [root@<IP>]: Postgres replication set up successfully",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "DEBUG [root@<IP>]: echo 'manual' > /etc/postgresql/12/main/start.conf",
+        "INFO [root@<IP>]: Postgres service disabled",
+        "DEBUG [root@<IP>]: systemctl disable postgresql.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
+        "INFO [root@<IP>]: Pacemaker and Corosync installed",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+    ]
+
+    filtered_lines_window_1 = filter_uninteresting_lines(log_lines, 1)
+    filtered_lines_window_2 = filter_uninteresting_lines(log_lines, 2)
+
+    assert filtered_lines_window_1 == expected_lines_window_1
+    assert filtered_lines_window_2 == expected_lines_window_2
