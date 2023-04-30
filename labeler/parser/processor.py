@@ -3,7 +3,7 @@ import json
 import re
 from typing import Dict, List, Any, Iterator
 from drain3 import TemplateMiner  # type: ignore
-from parser.logger import logger
+from labeler.parser.logger import logger
 
 
 def train(template_miner: TemplateMiner, lines: List[str]) -> None:  # type: ignore

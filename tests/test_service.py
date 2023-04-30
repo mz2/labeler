@@ -3,7 +3,7 @@
 import pytest
 import re
 from httpx import AsyncClient
-from parser.service import app
+from labeler.parser.service import app
 
 API_KEY = "foobar"
 API_URL = "/process"

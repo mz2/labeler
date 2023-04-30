@@ -3,8 +3,8 @@
 import argparse
 import sys
 from typing import List
-from parser.processor import train, matches, filter_uninteresting_lines
-from parser.miner import create_template_miner
+from labeler.parser.processor import train, matches, filter_uninteresting_lines
+from labeler.parser.miner import create_template_miner
 from labeler.tokenizer import tokenized_text
 
 

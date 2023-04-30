@@ -196,3 +196,7 @@ Replace <input_file1>, <input_file2>, <auth>, <host>, <proj>, <size>, and <overl
 - <max_bytes> (optional): The max # of bytes per batch
 
 The script will upload the input files to the specified Label Studio instance, batching the data in windows of the defined line count and max byte count per batch and overlapping lines. The batch size is pretty approximately enforced still (data is not truncated at the time of writing in the middle of the line for example).
+
+# log-parser
+
+There is also a log parsing utility included as a command-line tool and as a FastAPI deployable web service.

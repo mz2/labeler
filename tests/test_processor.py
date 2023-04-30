@@ -1,6 +1,6 @@
 from typing import List
 import pytest
-from parser.processor import filter_params, filter_uninteresting_lines
+from labeler.parser.processor import filter_params, filter_uninteresting_lines
 
 
 @pytest.mark.parametrize(
