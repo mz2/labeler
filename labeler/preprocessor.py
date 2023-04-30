@@ -1,7 +1,7 @@
 import re
 
 
-def preprocessed_text(text: str) -> str:
+def preprocessed_text(text: str, window_size: int) -> str:
     ip_address_pattern = r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"
     text = re.sub(ip_address_pattern, "[IP_ADDRESS]", text)
 

@@ -5,11 +5,11 @@ from labeler.preprocessor import preprocessed_text
 from labeler.tokenizer import tokenized_text
 
 
-def preprocess_file(input_file: str) -> str:
+def preprocess_file(input_file: str, window_size: int) -> str:
     with open(input_file, "r") as f:
         text = f.read()
 
-    return preprocessed_text(text)
+    return preprocessed_text(text, window_size)
 
 
 def main() -> None:
@@ -27,9 +27,19 @@ def main() -> None:
     parser.add_argument(
         "-p", "--preprocess_only", action="store_true", help="Output only preprocessed text instead of tokenized text."
     )
+    parser.add_argument(
+        "-n",
+        "--window_size",
+        type=int,
+        default=10,
+        help="""Size of window for filtering around potentially interesting log lines
+                (right now treated as lines that do not look like DEBUG log lines).
+                If negative value passed in, no filtering should be done.""",
+    )
+
     args = parser.parse_args()
 
-    preprocessed_text = preprocess_file(args.input)
+    preprocessed_text = preprocess_file(args.input, args.window_size)
 
     if args.preprocess_only:
         print(preprocessed_text)

@@ -63,6 +63,7 @@ def filter_params(params: List[str]) -> List[str]:
         # - IP addresses as substrings (for example in URLs), they should be masked.
         if not (param.isdigit() or is_float(param) or is_uuid(param) or is_ip_address(param)):
             param = mask_ip_address_substrings(param)
+            param = mask_uuid_substrings(param)
             filtered_params.append(param)
 
     return filtered_params
@@ -77,6 +78,14 @@ def mask_ip_address_substrings(param: str) -> str:
     ip_pattern = r"(?:\d{1,3}\.){3}\d{1,3}"
     if re.search(ip_pattern, param):
         param = re.sub(ip_pattern, "<IP>", param)
+    return param
+
+
+def mask_uuid_substrings(param: str) -> str:
+    # mask out the UUID-like string from a string like lab0-silo2-cpe-5201daa7-8340-433a-9b11-fc2b61c79e3b
+    uuid_pattern = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    if re.search(uuid_pattern, param):
+        param = re.sub(uuid_pattern, "<UUID>", param)
     return param
 
 
