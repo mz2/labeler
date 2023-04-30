@@ -1,4 +1,6 @@
 FROM ubuntu:22.04
+ENV API_KEY=invalid
+ENV DRAIN_STATE_PATH="/data/drain3_state.json"
 
 RUN apt-get update && apt-get install -y \
     python3-pip \
@@ -7,14 +9,12 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install poetry
 
 WORKDIR /app
-COPY ./labeler /app
-COPY ./poetry.lock /app
-COPY ./pyproject.toml /app
+COPY ./poetry.lock /app/poetry.lock
+COPY ./pyproject.toml /app/pyproject.toml
 
 RUN poetry install --no-dev
 
-ENV API_KEY=invalid
-ENV DRAIN_STATE_PATH="/data/drain3_state.json"
+COPY ./labeler /app/labeler
 
 EXPOSE 8080
 
