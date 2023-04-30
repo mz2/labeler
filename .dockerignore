@@ -5,3 +5,4 @@ drain3_state.json
 **/*.pyc
 .pytest_cache
 logs
+.git
