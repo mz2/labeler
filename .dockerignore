@@ -1,4 +1,4 @@
-tests/fixtures
+tests/fixtures/**
 external
 drain3_state.json
 **/__pycache__
