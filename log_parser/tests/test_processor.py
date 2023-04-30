@@ -62,7 +62,7 @@ def test_filter_debug_lines_with_two_windows_and_tail_to_trim():
     assert filter_debug_lines(input_lines, n=1) == expected_output
 
 
-def test_filter_debug_lines_with_two_windows_and_tail_to_trim():
+def test_filter_debug_lines_with_two_windows_and_a_line_in_between_to_trim():
     input_lines = [
         "line 1\n",
         "line 2\n",
