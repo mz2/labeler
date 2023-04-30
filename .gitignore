@@ -137,3 +137,4 @@ dmypy.json
 logs
 
 drain3_state.json
+tests/fixtures/weebl-2-months
