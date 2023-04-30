@@ -1,6 +1,7 @@
 # tests/test_fastapi_service.py
 
 import pytest
+import re
 from httpx import AsyncClient
 from parser.service import app
 
@@ -22,10 +23,21 @@ async def test_process_logs_success():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post(API_URL, json=test_data, headers={"Authorization": f"Bearer {API_KEY}"})
 
-    print("Response body:", response.content)
+    assert (
+        response.content
+        == b'{"results":["298 INFO: This is a test log message","299 DEBUG: This is another log message"]}'
+    )
 
     assert response.status_code == 200
-    assert "results" in response.json()
+
+    response_json = response.json()
+    assert "results" in response_json
+
+    # Regular expression pattern to match the expected log message structure
+    pattern = re.compile(r"\d+ (INFO|DEBUG): .*")
+
+    for log_message in response_json["results"]:
+        assert pattern.match(log_message) is not None
 
 
 @pytest.mark.asyncio
