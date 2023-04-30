@@ -1,17 +1,16 @@
-FROM python:3.10
+FROM ubuntu:22.04
 
 WORKDIR /app
 COPY . /app
 
-RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry config virtualenvs.create false
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
+RUN pip3 install poetry
 RUN poetry install --no-dev
 
 EXPOSE 8080
 
-ENV REDIS_HOST localhost
-ENV REDIS_PORT 6379
-ENV REDIS_DB 0
-
-CMD ["poetry", "run", "parser.service:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["poetry", "run", "uvicorn", "parser.service:app", "--host", "0.0.0.0", "--port", "8080"]

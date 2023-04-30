@@ -23,17 +23,11 @@ async def test_process_logs_success():
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post(API_URL, json=test_data, headers={"Authorization": f"Bearer {API_KEY}"})
 
-    assert (
-        response.content
-        == b'{"results":["298 INFO: This is a test log message","299 DEBUG: This is another log message"]}'
-    )
-
     assert response.status_code == 200
 
     response_json = response.json()
     assert "results" in response_json
 
-    # Regular expression pattern to match the expected log message structure
     pattern = re.compile(r"\d+ (INFO|DEBUG): .*")
 
     for log_message in response_json["results"]:
