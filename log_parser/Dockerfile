@@ -14,4 +14,4 @@ ENV REDIS_HOST localhost
 ENV REDIS_PORT 6379
 ENV REDIS_DB 0
 
-CMD ["uvicorn", "log_parser:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "parser.service:app", "--host", "0.0.0.0", "--port", "8080"]
