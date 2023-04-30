@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install poetry
 
 WORKDIR /app
-COPY . /app
+COPY ./labeler /app
+COPY ./poetry.lock /app
+COPY ./pyproject.toml /app
 
 RUN poetry install --no-dev
 
