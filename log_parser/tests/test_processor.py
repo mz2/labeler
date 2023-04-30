@@ -90,6 +90,16 @@ def test_filter_debug_lines():
     log_lines = [
         "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
         "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
         "INFO [root@<IP>]: Postgres service started",
         "DEBUG [root@<IP>]: systemctl start postgresql",
         "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
@@ -107,6 +117,20 @@ def test_filter_debug_lines():
         "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
         "DEBUG [root@<IP>]: systemctl disable postgresql@12-main.service",
         "INFO [root@<IP>]: Pacemaker and Corosync installed",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
         "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
         "DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
     ]
@@ -158,3 +182,89 @@ def test_filter_debug_lines():
 
     assert filtered_lines_window_1 == expected_lines_window_1
     assert filtered_lines_window_2 == expected_lines_window_2
+
+
+def test_filter_in_between_non_debug_lines():
+    log_lines = [
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+    ]
+
+    expected_lines_window_1 = [
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+    ]
+
+    expected_lines_window_3 = [
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres service started",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+        "INFO [root@<IP>]: Postgres data directory cleaned",
+        "DEBUG [root@<IP>]: rm -rf /var/lib/postgresql/12/main",
+    ]
+
+    filtered_lines_window_1 = filter_uninteresting_lines(log_lines, 1)
+    filtered_lines_window_3 = filter_uninteresting_lines(log_lines, 3)
+    assert filtered_lines_window_1 == expected_lines_window_1
+    assert filtered_lines_window_3 == expected_lines_window_3
+
+
+def test_filtering_with_another_large_input():
+    input_str = [
+        "249 wal_keep_segments = <NUM>' >> /etc/postgresql/<NUM>/main/<URL> ['postgresql.conf']",
+        "250 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "250 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'start', 'postgresql']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'rm', '-rf', '/var/lib/postgresql/12/main']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'rm', '-rf', '/var/lib/postgresql/12/main']",
+        "251 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: sudo -u postgres <*> <*> <*> <*> <*> <*> <*> ['pg_basebackup', '-h', '-D', '/var/lib/postgresql/12/main', '-v', '--wal-method=stream']",
+        "251 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: sudo -u postgres <*> <*> <*> <*> <*> <*> <*> ['pg_basebackup', '-h', '-D', '/var/lib/postgresql/12/main', '-v', '--wal-method=stream']",
+        "234 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: <*> <*> <*> <*> ['echo', '\"manual\"', '>', '/etc/postgresql/12/main/start.conf']",
+        "234 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: <*> <*> <*> <*> ['echo', '\"manual\"', '>', '/etc/postgresql/12/main/start.conf']",
+        "234 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: <*> <*> <*> <*> ['echo', '\"manual\"', '>', '/etc/postgresql/12/main/start.conf']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'disable', 'postgresql.service']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'disable', 'postgresql@12-main.service']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'disable', 'postgresql@12-main.service']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'disable', 'postgresql@12-main.service']",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpwj8b80wj', '<IP>:/etc/corosync/corosync.conf']",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpxjifdjmo', '<IP>:/etc/corosync/corosync.conf']",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpced_zyug', '<IP>:/etc/corosync/corosync.conf']",
+    ]
+
+    expected_str = [
+        "249 wal_keep_segments = <NUM>' >> /etc/postgresql/<NUM>/main/<URL> ['postgresql.conf']",
+        "250 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "250 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: install -o postgres -g postgres -m <NUM> -d /var/lib/postgresql/<NUM>/main/tmp",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'start', 'postgresql']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'rm', '-rf', '/var/lib/postgresql/12/main']",
+        "26 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG <*> <*> <*> <*> ['[root@<IP>]:', 'systemctl', 'disable', 'postgresql@12-main.service']",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "252 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root DEBUG [root@<IP>]: DEBIAN_FRONTEND=noninteractive apt-get -q install -y pacemaker corosync crmsh",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpwj8b80wj', '<IP>:/etc/corosync/corosync.conf']",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpxjifdjmo', '<IP>:/etc/corosync/corosync.conf']",
+        "219 <NUM>-<NUM>-<NUM>-<NUM>:<NUM>:<NUM> root INFO <*> -> <*> ['/tmp/tmpced_zyug', '<IP>:/etc/corosync/corosync.conf']",
+    ]
+
+    assert filter_uninteresting_lines(input_str, 4) == expected_str
