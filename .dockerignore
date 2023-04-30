@@ -1,0 +1,8 @@
+tests/fixtures/**
+external
+drain3_state.json
+**/__pycache__
+**/*.pyc
+.pytest_cache
+logs
+.git
