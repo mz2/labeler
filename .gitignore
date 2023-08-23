@@ -135,3 +135,6 @@ dmypy.json
 **/*.model
 .DS_Store
 logs
+
+drain3_state.json
+tests/fixtures/weebl-2-months

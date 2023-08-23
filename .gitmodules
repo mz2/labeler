@@ -1,0 +1,6 @@
+[submodule "external/label-studio-transformers"]
+	path = external/label-studio-transformers
+	url = https://github.com/heartexlabs/label-studio-transformers.git
+[submodule "label-studio-ml-backend"]
+	path = label-studio-ml-backend
+	url = https://github.com/heartexlabs/label-studio-ml-backend.git

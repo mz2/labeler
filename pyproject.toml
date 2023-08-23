@@ -11,12 +11,16 @@ transformers = "^4.27.2"
 torch = "^2.0.0"
 pandas = "^2.0.0"
 scikit-learn = "^1.2.2"
-fastapi = "^0.95.0"
 pydantic = "^1.10.7"
 uvicorn = {extras = ["standard"], version = "^0.21.1"}
 asgiref = "^3.6.0"
 datasets = "^2.11.0"
 matplotlib = "^3.7.1"
+requests = "^2.29.0"
+drain3 = "^0.9.11"
+redis = "^4.5.4"
+fastapi = "^0.95.1"
+httpx = "^0.24.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.2"
@@ -28,6 +32,7 @@ tensorboard = "^2.12.1"
 [tool.pyright]
 include = [
     "labeler/**/*.py",
+    "bin/**/*.py",
 ]
 
 typeCheckingMode = "strict"
@@ -38,9 +43,6 @@ reportUnknownArgumentType = false
 [tool.black]
 line-length = 120
 target-version = ['py310']
-
-[tool.flake8]
-max-line-length = 120
 
 [build-system]
 requires = ["poetry-core"]

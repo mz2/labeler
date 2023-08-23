@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "token-labeler"
+version = "0.1.0"
+description = ""
+authors = ["Matias Piipari <matias.piipari@gmail.com>"]
+readme = "README.md"
+packages = [{include = "token_labeler"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+label-studio = "^1.7.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
